@@ -1,2 +1,15 @@
+# emacs copy
 *#
+
+# linux backup
 *~
+
+# documentation
+source/dox/doc/
+source/dox/*.log
+
+# object
+*.o
+**/*.so
+
+source/interp

@@ -9,7 +9,7 @@
  * \brief Symbol definiuje wymiarowi przestrzeni 3D
  *
  * Symbol odpowiada wymiarowi przestrzeni 3D.
- * Celem wprowadzenia definicji jest posiadanie w kodzie 
+ * Celem wprowadzenia definicji jest posiadanie w kodzie
  * wpisu, który ma czytelną interpretację.
  */
 #define WYMIAR3D    3
@@ -20,15 +20,21 @@
 class Wektor3D {
    double _Wsp[WYMIAR3D];
 
- public:  
+ public:
   /*!
-   * \brief Inicjalizuje współrzędne wektora wartościami 0.
+   * \brief Inicjalizuje współrzędne wektora.
+   *  Inicjalizuje współrzędne wektora. W przypadku braku podania parametrów,
+   *  wypełnia wektor zerami.
    */
-  Wektor3D() { for (double &Wsp : _Wsp)  Wsp = 0; }
+  Wektor3D(double x=0, double y=0, double z=0){
+      _Wsp[0] = x;
+      _Wsp[1] = y;
+      _Wsp[2] = z;
+  }
 
   /*!
    * \brief Udostępnia do odczytu współrzędną o podanym indeksie.
-   * 
+   *
    * Udostępnia do odczytu współrzędną o podanym indeksie.
    * Metoda nie ma kontroli wartości współrzędnej. Na potrzeby
    * debugowania jest w kodzie tylko asercja.
@@ -37,11 +43,11 @@ class Wektor3D {
    *
    * \pre 0 <= Idx && Idx < WYMIAR3D
    */
-  double operator [] (int Idx) const 
+  double operator [] (int Idx) const
      { assert(0 <= Idx && Idx < WYMIAR3D); return _Wsp[Idx]; }
   /*!
    * \brief Udostępnia do modyfikacji współrzędną o podanym indeksie.
-   * 
+   *
    * Udostępnia do modyfikacji współrzędną o podanym indeksie.
    * Metoda nie ma kontroli wartości współrzędnej. Na potrzeby
    * debugowania jest w kodzie tylko asercja.
