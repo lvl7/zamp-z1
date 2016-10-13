@@ -1,9 +1,46 @@
-#include "ui.hpp"
+#include <iostream>
+#include <dlfcn.h>
+#include <cassert>
+#include "Interp4Command.hh"
 
-int main(int argc, char** argv){
-  Ui ui = new ui();
+using std::cout;
+using std::cerr;
+using std::endl;
 
-  ui.showMenu();
+
+
+
+int main()
+{
+  void *pLibHnd_Move = dlopen("Interp4Fly.so",RTLD_LAZY);
+  Interp4Command *(*pCreateCmd_Move)(void);
+  void *pFun;
+
+  if (!pLibHnd_Move) {
+    cerr << "!!! Brak biblioteki: Interp4Fly.so" << endl;
+    return 1;
+  }
+
+
+  pFun = dlsym(pLibHnd_Move,"CreateCmd");
+  if (!pFun) {
+    cerr << "!!! Nie znaleziono funkcji CreateCmd" << endl;
+    return 1;
+  }
+  pCreateCmd_Move = *reinterpret_cast<Interp4Command* (**)(void)>(&pFun);
+
+
+  Interp4Command *pCmd = pCreateCmd_Move();
+
+  cout << endl;
+  cout << pCmd->GetCmdName() << endl;
+  cout << endl;
+  pCmd->PrintSyntax();
+  cout << endl;
+  pCmd->PrintCmd();
+  cout << endl;
   
-  return 0;
+  delete pCmd;
+
+  dlclose(pLibHnd_Move);
 }
