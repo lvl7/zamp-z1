@@ -20,10 +20,4 @@ class Visualization {
    */
   virtual void Draw( DronPose *pPose ) {}
 };
-
-
-
-
-
-
 #endif

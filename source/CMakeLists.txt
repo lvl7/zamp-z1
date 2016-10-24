@@ -4,27 +4,31 @@ project (${module_name})
 
 set(CMAKE_CXX_COMPILER clang++)
 
-file(GLOB_RECURSE headers
-  "inc/*.hh"
-)
-set(all_headers ${headers})
 
-set (all_includes_dir)
-foreach (_headerFile ${headers})
-    get_filename_component(_dir ${_headerFile} PATH)
-    list (APPEND all_includes_dir ${_dir})
-endforeach()
-list(REMOVE_DUPLICATES all_includes_dir)
+set( flags "-std=c++11" )
+set( flagsCoverage "-Wall -pedantic" )
+set( flagsLinker "-ldl")
+
+set( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${flags} ${flagsCoverage}" )
+set( CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} ${flagsLinker}" )
+
+
+# make plugins
+add_subdirectory(plugin)
+
+# headers
+include_directories(${CMAKE_BINARY_DIR}/inc/)
+
+# plugins
+include_directories(inc/)
+link_directories(${CMAKE_BINARY_DIR}/plugin/obj)
+
 
 file(GLOB_RECURSE sources
   "src/*.cpp"
 )
 set(all_sources ${sources})
 
-add_custom_target(custom
-  MESSAGE("custom target----")
-  )
-
-
 include_directories(${all_includes_dir})
 add_executable(${module_name} ${all_sources})
+target_link_libraries(${module_name} Interp4Fly)
