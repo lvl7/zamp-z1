@@ -7,17 +7,17 @@ using std::cout;
 using std::cerr;
 using std::endl;
 
-
-
-
 int main()
 {
-  void *pLibHnd_Move = dlopen("Interp4Fly.so",RTLD_LAZY);
+
+  std::cout << "hello wrold! <<<<<<<<<<<<<<<<<<<<<<<<<<<<<" << std::endl;
+
+  void *pLibHnd_Move = dlopen("libInterp4Fly.so",RTLD_LAZY);
   Interp4Command *(*pCreateCmd_Move)(void);
   void *pFun;
 
   if (!pLibHnd_Move) {
-    cerr << "!!! Brak biblioteki: Interp4Fly.so" << endl;
+    cerr << "!!! Brak biblioteki: libInterp4Fly.so" << endl;
     return 1;
   }
 
@@ -39,7 +39,7 @@ int main()
   cout << endl;
   pCmd->PrintCmd();
   cout << endl;
-  
+
   delete pCmd;
 
   dlclose(pLibHnd_Move);

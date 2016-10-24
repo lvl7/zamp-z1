@@ -1,8 +1,19 @@
+# main object
+zamp_z1
+
 # emacs copy
 *#
 
 # linux backup
 *~
+
+# when using cmake the Makefiles should be publish
+**/Makefile
+
+# camke
+**/CMakeFiles/
+**/CMakeCache.txt
+**/cmake_install.cmake
 
 # documentation
 source/dox/doc/
