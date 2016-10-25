@@ -7,6 +7,9 @@
 #endif
 
 #include "Interp4Command.hh"
+#include <cmath>
+
+#define PI_MATH_CONST 3.14159265359
 
 // TODO
 /*!
@@ -36,9 +39,9 @@ class Interp4Fly : public Interp4Command {
   double _speedVertical_mPs;
 
   /**
-   * \brief Dystan który pozostał do zakonczenia wykonywania ruchu. W metrach
+   * \brief Zadany do przelecenia dystans w metrach
    */
-  double _distanceRemain_m;
+  double _distance_m;
 
 public:
   // TODO
@@ -65,7 +68,7 @@ public:
   /*!
      * \brief
      */
-  virtual bool ExecCmd(DronPose *pRobPose, Visualization *pVis) const;
+  virtual bool ExecCmd(DronePose *pRobPose, Visualization *pVis) const;
   // TODO
   /*!
      * \brief

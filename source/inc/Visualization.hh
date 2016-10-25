@@ -2,7 +2,7 @@
 #define VISUALIZATION_HH
 
 
-#include "DronPose.hh"
+#include "DronePose.hh"
 
 /*!
  * \brief
@@ -18,6 +18,6 @@ class Visualization {
   /*!
    * \brief
    */
-  virtual void Draw( DronPose *pPose ) {}
+  virtual void Draw( DronePose *pPose ) {}
 };
 #endif

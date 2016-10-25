@@ -8,46 +8,33 @@ extern "C" {
 Interp4Command *CreateCmd(void);
 }
 
-// TODO
-/*!
- * \brief
- *
- *
- */
 Interp4Command *CreateCmd(void) { return Interp4Fly::CreateCmd(); }
 
-// TODO
-/*!
- *
- */
 Interp4Fly::Interp4Fly() {}
 
-// TODO
-/*!
- *
- */
 void Interp4Fly::PrintCmd() const {
-  /*
- *  Tu trzeba napisać odpowiednio zmodyfikować kod poniżej.
- */
   cout << GetCmdName() << " " << _speedHorizontal_mPs << " "
-       << _speedVertical_mPs << " " << _distanceRemain_m << endl;
+       << _speedVertical_mPs << " " << _distance_m << endl;
 }
 
-// TODO
-/*!
- *
- */
 const char *Interp4Fly::GetCmdName() const { return "Fly"; }
 
-// TODO
-/*!
- *
- */
-bool Interp4Fly::ExecCmd(DronPose *pRobPose, Visualization *pVis) const {
-  /*
-   *  Tu trzeba napisać odpowiedni kod.
-   */
+bool Interp4Fly::ExecCmd(DronePose *pRobPose, Visualization *pVis) const {
+  double dx, dy, dz, dL;
+  dx = _speedHorizontal_mPs * TIME_INTERVAL_MS/1000 * cos(pRobPose->GetAngle_deg() * PI_MATH_CONST / 180);
+  dy = _speedHorizontal_mPs * TIME_INTERVAL_MS/1000 * sin(pRobPose->GetAngle_deg() * PI_MATH_CONST / 180);
+  dz = _speedVertical_mPs * TIME_INTERVAL_MS/1000;
+
+  dL = sqrt(pow(dx, 2) + pow(dy, 2) + pow(dz, 2));
+
+  double flyedDistance =0;
+  while(flyedDistance < _distance_m){
+    flyedDistance += dL;
+    pRobPose->AddDeltaPos_m(dx, dy, dz);
+  }
+  pRobPose->AddDeltaPos_m(dx, dy, dz);
+
+
   return true;
 }
 
@@ -61,7 +48,7 @@ bool Interp4Fly::ReadParams(std::istream &istream) {
   istream >> param;
   setField(param, _speedVertical_mPs, "ver_speed");
   istream >> param;
-  setField(param, _distanceRemain_m, "dist");
+  setField(param, _distance_m, "dist");
 
 
   return true;
