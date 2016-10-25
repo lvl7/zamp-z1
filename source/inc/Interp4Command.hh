@@ -22,7 +22,7 @@
    /*!
     * \brief Destruktor wirtualny ze wzgledu na klasy pochodne
     *
-    *  
+    *
     */
    virtual ~Interp4Command() {}
    /*!

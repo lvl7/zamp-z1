@@ -12,10 +12,10 @@ include_directories(
 )
 
 
-message(---sources---)
+message(---names of plugins---)
 foreach(s ${sources})
   get_filename_component(n ${s} NAME_WE)
   message(${n})
   add_library(${n} SHARED ${s})
 endforeach(s)
-message(===sources===)
+message(===names of plugins===)

@@ -23,4 +23,6 @@ source/dox/*.log
 *.o
 **/*.so
 
-source/interp
+# atom
+#   linter-clang
+.clang_complete
