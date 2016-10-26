@@ -1,53 +1,57 @@
-#ifndef INTERP_4_FLY_HH
-#define INTERP_4_FLY_HH
+#ifndef INTERP_4_TUNR_HH
+#define INTERP_4_TUNR_HH
 
 #ifndef __GNUG__
 #pragma interface
 #pragma implementation
 #endif
 
-#include "Interp4Command.hh"
 #include <cmath>
 
+#include "Interp4Command.hh"
+#include "Wektor3D.hh"
 
 // TODO
-/*!
- * \file
- * \brief Definicja klasy Interp4Fly
- *
- * Plik zawiera definicję klasy Interp4Fly ...
+/**
+ * file
  */
 
 // TODO
-/*!
- * \brief Modeluje polecenie dla robota mobilnego, które wymusza jego ruch do
- * przodu
- *
- *  Klasa modeluje ...
+/**
+ * class
  */
-class Interp4Fly : public Interp4Command {
+class Interp4Turn : public Interp4Command {
+private:
+  /**
+   * \brief Prędkość drona. W metrach na sekundę
+   *
+   * Nie może być ujemna
+   */
+  double _velocity_mPs;
 
   /**
-   * \brief Prędkość horyzontalna. W metrach na sekundę
+   * \biref Długoś łuku w metrach
+   *
+   * Musi być dodatnia
    */
-  double _velocityHorizontal_mPs;
+  double _arc_m;
 
   /**
-   * \brief Prędkość werykalna. W metrach na sekundę
+   * \brief Promień łuku w metrach
+   *
+   * Wartość dodatnia oznacza iż dron skręca w prawo
+   * Wartość ujemna oznacza iż dron skręca w lewo
+   * Nie może być zerowy
    */
-  double _velocityVertical_mPs;
-
-  /**
-   * \brief Zadany do przelecenia dystans w metrach
-   */
-  double _distance_m;
+  double _radius_m;
 
 public:
   // TODO
   /*!
      * \brief
      */
-  Interp4Fly();
+  Interp4Turn();
+
   // TODO
   /*!
      * \brief
@@ -85,6 +89,7 @@ public:
      *  Ta metoda nie musi być zdefiniowna w klasie bazowej.
      */
   static Interp4Command *CreateCmd();
+
 };
 
-#endif //INTERP_4_FLY_HH
+#endif // INTERP_4_TUNR_HH

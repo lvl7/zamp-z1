@@ -20,7 +20,6 @@ add_subdirectory(plugin)
 include_directories(${CMAKE_BINARY_DIR}/inc/)
 
 # plugins
-include_directories(inc/)
 link_directories(${CMAKE_BINARY_DIR}/plugin/obj)
 
 
@@ -31,4 +30,15 @@ set(all_sources ${sources})
 
 include_directories(${all_includes_dir})
 add_executable(${module_name} ${all_sources})
-target_link_libraries(${module_name} Interp4Fly)
+
+
+# link plugins
+file(GLOB plugins
+  "plugin/src/*.cpp"
+)
+foreach(s ${plugins})
+  get_filename_component(n ${s} NAME_WE)
+  set(plugins_names "${plugins_names} ${n}")
+  message("plugins : " ${n})
+  target_link_libraries(${module_name} ${n})
+endforeach(s)

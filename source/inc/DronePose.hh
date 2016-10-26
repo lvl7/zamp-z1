@@ -51,7 +51,6 @@ public:
      */
   DronePose();
 
-  // TODO
   /**
      * \brief Ustawia wartości współrzędnych pozy robota
      *
@@ -68,9 +67,30 @@ public:
   void SetPos_m(double x_m, double y_m, double z_m);
 
   /**
-   * \brief Dodaje do aktualnych współrzędnych pozy robota podane wartości w metrach.
+     * \brief Ustawia wartości współrzędnych pozy robota
+     *
+     *  Ustawia wartości współrzędnych kartezjańskich pozycji.
+     *  Wywołuje funkcje DronePose::AfterUpdate()
+     *
+     *  \param[in] x_m - usawiana wartość współrzędnej \e x-owej
+     *                    wyrażonej w metrach,
+     *  \param[in] y_m - usawiana wartość współrzędnej \e y-owej
+     *                    wyrażonej w metrach,
+     *  \param[in] z_m - usawiana wartość współrzędnej \e z-owej
+     *                    wyrażonej w metrach,
+     *  \param[in] ang_deg - ustawiana wartość kąta orientacji
+     *                   robota wyrażona w stopniach.
+     */
+  void SetPos_m_deg(double x_m, double y_m, double z_m, double ang_deg);
+
+
+
+  /**
+   * \brief Dodaje do aktualnych współrzędnych pozy robota podane wartości w
+   * metrach.
    *
-   *  Do aktualnych współrzędnych pozy robota dodaje podane w argumentach wartości wyrażnone w metrach
+   *  Do aktualnych współrzędnych pozy robota dodaje podane w argumentach
+   * wartości wyrażnone w metrach
    *  Wywołuje funkcje DronePose::AfterUpdate()
    *
    * @param[in] xDelta_m różnica wartości współrzędnej x-owej w metrach
@@ -78,6 +98,23 @@ public:
    * @param[in] zDelta_m różnica wartości współrzędnej z-owej w metrach
    */
   void AddDeltaPos_m(double xDelta_m, double yDelta_m, double zDelta_m);
+
+  /**
+   * \brief Dodaje do aktualnych współrzędnych pozy robota podane wartości w
+   * metrach oraz pozycji kątowej w stopniach.
+   *
+   *  Do aktualnych współrzędnych pozy robota dodaje podane w argumentach
+   * wartości wyrażnone w metrach, do kątu obrotu w stopniach.
+   *
+   *  Wywołuje funkcje DronePose::AfterUpdate()
+   *
+   * @param[in] xDelta_m różnica wartości współrzędnej x-owej w metrach
+   * @param[in] yDelta_m różnica wartości współrzędnej y-owej w metrach
+   * @param[in] zDelta_m różnica wartości współrzędnej z-owej w metrach
+   * @param[in] angleDelta_deg różnica kątu obrotu drona w stopniach
+   */
+  void AddDeltaPos_m_deg(double xDelta_m, double yDelta_m, double zDelta_m,
+                         double angleDelta_deg);
 
   // TODO
   /**
@@ -101,6 +138,18 @@ public:
      *                   robota wyrażona w stopniach.
      */
   void SetAngle_deg(double angle_deg);
+
+  // TODO
+  /**
+     * \brief Dodaje do aktualnej wartości kąta orientacji robota angleDelta_deg
+     *
+     *  Dodaje do aktualnej wartości kąta orientacji robota angleDelta_deg
+     *  Po wykonaniu tej operacji wywołana zostaje metoda
+     *  \link DronePose::AfterUpdate AfterUpdate()\endlink.
+     *  \param[in] angleDelta_deg - różnica wartość kątu orientacji
+     *                   robota wyrażona w stopniach.
+     */
+  void AddAngle_deg(double angleDelta_deg);
 
   // TODO
   /**
