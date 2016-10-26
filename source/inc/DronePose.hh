@@ -3,6 +3,7 @@
 
 #include "Wektor3D.hh"
 
+#include <fstream>
 #include <iostream>
 
 // TODO
@@ -41,6 +42,13 @@ private:
      */
   double _angle_deg;
 
+  /**
+   * \biref Plik, do którego mają być wpisywane nowe współrzędne.
+   *
+   * Plik, do którego mają być wpisywane nowe współrzędne.
+   */
+  std::ofstream _outFile;
+
 public:
   // TODO
   /**
@@ -50,6 +58,13 @@ public:
      *  jak też jego kąt orientacji.
      */
   DronePose();
+
+  /**
+   * \biref Zwalnia wszystkie pola.
+   *
+   * Zamyka plik wyjściowy _openFile.
+   */
+  ~DronePose();
 
   /**
      * \brief Ustawia wartości współrzędnych pozy robota
@@ -82,8 +97,6 @@ public:
      *                   robota wyrażona w stopniach.
      */
   void SetPos_m_deg(double x_m, double y_m, double z_m, double ang_deg);
-
-
 
   /**
    * \brief Dodaje do aktualnych współrzędnych pozy robota podane wartości w
@@ -178,6 +191,15 @@ public:
      * Udostępnia kąt orientacji drona. Kąt wyrażony jest w stopniach.
      */
   double GetAngle_deg();
+
+//TODO
+  // /**
+  //  * \biref Ustawia plik do którego mają być zapisywane nowe współrzędne drona.
+  //  *
+  //  * Ustawia plik do którego mają być zapisywane nowe współrzędne drona.
+  //  * @param outFile Plik do którego mają być zapisywane nowe współrzędne drona.
+  //  */
+  // void setOutputFileStream(std::ofstream &outFile);
 };
 
 #endif // DRONE_POSE
