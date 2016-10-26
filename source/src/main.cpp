@@ -6,16 +6,21 @@
 #include "Interp4Command.hh"
 #include "DronePose.hh"
 
-int main()
+int main(int argc, char ** argv)
 {
-  void *pLibHnd_Move = dlopen("libInterp4Fly.so",RTLD_LAZY);
+  std::string pluginName = argv[1];
+  std::cout << "--------------------" << std::endl;
+  std::cout << pluginName << std::endl;
+  std::cout << "--------------------" << std::endl;
+
+  void *pLibHnd_Move = dlopen(pluginName.c_str(),RTLD_LAZY);
   Interp4Command *(*pCreateCmd_Move)(void);
   void *pFun;
 
   std::unique_ptr<DronePose> drone(new DronePose);
 
   if (!pLibHnd_Move) {
-    std::cerr << "!!! Brak biblioteki: libInterp4Fly.so" << std::endl;
+    std::cerr << "!!! Brak biblioteki: "<< pluginName << std::endl;
     return 1;
   }
 

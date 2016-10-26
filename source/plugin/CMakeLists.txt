@@ -1,10 +1,9 @@
 
 
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/obj)
-file(GLOB sources
+file(GLOB plugins
   "src/*.cpp"
 )
-set(all_sources ${sources})
 
 include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}/inc
@@ -13,7 +12,7 @@ include_directories(
 
 
 message(---names of plugins---)
-foreach(s ${sources})
+foreach(s ${plugins})
   get_filename_component(n ${s} NAME_WE)
   message(${n})
   add_library(${n} SHARED ${s})

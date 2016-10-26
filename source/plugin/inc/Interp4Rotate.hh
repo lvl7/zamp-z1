@@ -1,53 +1,49 @@
-#ifndef INTERP_4_FLY_HH
-#define INTERP_4_FLY_HH
+#ifndef INTERP_4_ROTATE_HH
+#define INTERP_4_ROTATE_HH
 
 #ifndef __GNUG__
 #pragma interface
 #pragma implementation
 #endif
 
-#include "Interp4Command.hh"
 #include <cmath>
 
+#include "Interp4Command.hh"
 
 // TODO
-/*!
- * \file
- * \brief Definicja klasy Interp4Fly
- *
- * Plik zawiera definicję klasy Interp4Fly ...
+/**
+ * file
  */
 
 // TODO
-/*!
- * \brief Modeluje polecenie dla robota mobilnego, które wymusza jego ruch do
- * przodu
- *
- *  Klasa modeluje ...
+/**
+ * class
  */
-class Interp4Fly : public Interp4Command {
+class Interp4Rotate : public Interp4Command {
+private:
+  /**
+   * \brief Prędkość obrotowa droga w osi Z. W stopniach na sekundę.
+   *
+   * Dodatnia wartość oznacza obrót w lewo.
+   * Ujemna wartość oznacza obrót w prawo.
+   *
+   * Nie może być zerowa
+   */
+  double _velocity_angular_degPs;
 
   /**
-   * \brief Prędkość horyzontalna. W metrach na sekundę
+   * \biref Kąt o jaki ma się obrucić dron w stopniach
+   *
+   * Musi być dodatnia
    */
-  double _velocityHorizontal_mPs;
-
-  /**
-   * \brief Prędkość werykalna. W metrach na sekundę
-   */
-  double _velocityVertical_mPs;
-
-  /**
-   * \brief Zadany do przelecenia dystans w metrach
-   */
-  double _distance_m;
-
+  double _angle_deg;
 public:
   // TODO
   /*!
      * \brief
      */
-  Interp4Fly();
+  Interp4Rotate();
+
   // TODO
   /*!
      * \brief
@@ -85,6 +81,7 @@ public:
      *  Ta metoda nie musi być zdefiniowna w klasie bazowej.
      */
   static Interp4Command *CreateCmd();
+
 };
 
-#endif //INTERP_4_FLY_HH
+#endif // INTERP_4_ROTATE_HH
