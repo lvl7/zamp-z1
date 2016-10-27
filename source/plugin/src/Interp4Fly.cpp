@@ -25,7 +25,7 @@ bool Interp4Fly::ExecCmd(DronePose *pRobPose, Visualization *pVis) const {
   dy = _velocityHorizontal_mPs * TIME_INTERVAL_MS / 1000.0 *
        sin(pRobPose->GetAngle_deg() * PI_MATH_CONST / 180.0);
   dz = _velocityVertical_mPs * TIME_INTERVAL_MS / 1000.0;
-  
+
   dL = sqrt(pow(dx, 2) + pow(dy, 2) + pow(dz, 2));
 
   double flyedDistance = 0;

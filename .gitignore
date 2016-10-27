@@ -26,3 +26,8 @@ source/dox/*.log
 # atom
 #   linter-clang
 .clang_complete
+
+
+
+# output
+coords.txt

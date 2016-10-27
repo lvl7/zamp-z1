@@ -9,13 +9,14 @@
 int main(int argc, char ** argv)
 {
   std::string pluginName = argv[1];
-  std::cout << "--------------------" << std::endl;
-  std::cout << pluginName << std::endl;
-  std::cout << "--------------------" << std::endl;
 
   void *pLibHnd_Move = dlopen(pluginName.c_str(),RTLD_LAZY);
   Interp4Command *(*pCreateCmd_Move)(void);
   void *pFun;
+
+
+  std::ofstream coordFile;
+  coordFile.open("coords.txt");
 
   std::unique_ptr<DronePose> drone(new DronePose);
 
@@ -42,7 +43,6 @@ int main(int argc, char ** argv)
     pCmd->PrintSyntax();
   }
 
-  std::cout << "---------------" << std::endl;
   //
   // std::cout << std::endl;
   // std::cout << pCmd->GetCmdName() << std::endl;
@@ -52,6 +52,7 @@ int main(int argc, char ** argv)
   pCmd->PrintCmd();
   // std::cout << std::endl;
 
+  coordFile.close();
   pCmd->ExecCmd(drone.get(), NULL);
 
   delete pCmd;
