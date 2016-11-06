@@ -1,9 +1,8 @@
 #include "Interface.hh"
 
-#include <limits>
 
-Interface::Interface(std::istream &istream, std::ostream &ostream)
-    : _istream(istream), _ostream(ostream) {
+Interface::Interface(std::istream &istream, std::ostream &ostream, Io * io)
+    : _istream(istream), _ostream(ostream), _io(io) {
 
       initMainMenu();
 }
