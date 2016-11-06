@@ -19,14 +19,14 @@ private:
 
 public:
   /**
-   * \biref Konstruktor klasy Io
+   * \brief Konstruktor klasy Io
    *
    * Konstruktor klasy Io
    */
   Io();
 
   /**
-   * \biref Destruktor. Zamyka wszystkei otwarte strumienie
+   * \brief Destruktor. Zamyka wszystkei otwarte strumienie
    *
    * Zamyka wszsytkie otwarte strumienie
    */
