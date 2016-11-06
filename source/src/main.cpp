@@ -3,8 +3,11 @@
 #include <cassert>
 #include <memory>
 
+#include "Interface.hh"
 #include "Interp4Command.hh"
 #include "DronePose.hh"
+
+
 
 int main(int argc, char ** argv)
 {
@@ -47,9 +50,9 @@ int main(int argc, char ** argv)
   // std::cout << std::endl;
   // std::cout << pCmd->GetCmdName() << std::endl;
   // std::cout << std::endl;
-  pCmd->PrintSyntax();
+  // pCmd->PrintSyntax();
   // std::cout << std::endl;
-  pCmd->PrintCmd();
+  // pCmd->PrintCmd();
   // std::cout << std::endl;
 
   coordFile.close();
@@ -58,4 +61,9 @@ int main(int argc, char ** argv)
   delete pCmd;
 
   dlclose(pLibHnd_Move);
+
+  std::unique_ptr<Interface> interface(new Interface(std::cin, std::cout));
+
+  interface->printMainMenu();
+  interface->getCommandAndExecute();
 }
