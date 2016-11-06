@@ -43,10 +43,29 @@ public:
   Interface(std::istream &istream = std::cin, std::ostream& ostream = std::cout);
 
   /**
+   * \brief Zawiera możliwe do wyboru opcje.
+   *
+   *  Dodaje do zbioru opcji opcje. Klucz oraz treść.
+   */
+  void initMainMenu();
+  /**
    * \brief Drukuje menu z dostepnymi opcjami
    *
+   * Dostępne opcje zdefiniowane są w initMainMenu().
    */
   void printMainMenu();
+
+  /**
+   * \biref Pobiera od użytkownika odpowiedz.
+   *
+   * Pobiera od użytkownika klucz do polecenia z menu głównego oraz wykonuje polecenie.
+   *
+   * \throws string - Kiedy podana przez użytkownika komenda jest pusta
+   * \throws string - Kiedy polecenie jest nieznane
+   */
+   void getCommandAndExecute();
+
 };
+
 
 #endif // INTERFACE_HH
