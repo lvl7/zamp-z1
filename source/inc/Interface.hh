@@ -2,13 +2,15 @@
 #define INTERFACE_HH
 
 #include <iostream>
+#include <limits>
 #include <utility>
 #include <vector>
+
+#include "io.hh"
 
 // TODO opis
 class Interface {
 private:
-
   /**
    * \brief Definiuje skąd będą pobierane odpowiedzi.
    *
@@ -24,11 +26,18 @@ private:
   std::ostream &_ostream;
 
   /**
-   *  \brief Przechowuje dostępne polecenia w menu głównym
+   * \brief Przechowuje dostępne polecenia w menu głównym
    *
    * Tablica par składających się z klucza odpowiedzi oraz opisu polecenia.
    */
   std::vector<std::pair<std::string, std::string>> mainMenuFeatures;
+
+  /**
+   * \brief zarządza plikami
+   *
+   * Wskaźnik do klasy \link Io \endlink.
+   */
+  Io *_io;
 
 public:
   /**
@@ -37,10 +46,13 @@ public:
    * Ustawia strumienie przez które będą pobierane polecenia i wysyłane menu.
    * Defiuniuje menu główne. Domyślnymi parametrami są strumienie standardowe
    *
-   * @param[in] istream - srumień z którego będą pobierane polecenia
-   * @param[out] ostream - srumień na który będzie wyświetlane menu
+   * \param[in] istream - srumień z którego będą pobierane polecenia
+   * \param[out] ostream - srumień na który będzie wyświetlane menu
+   * \param[int/out] io - wskaźnik na klasę odpowiedzialną za pobieranie i
+   * zapisywanie do plików
    */
-  Interface(std::istream &istream = std::cin, std::ostream& ostream = std::cout);
+  Interface(std::istream &istream = std::cin, std::ostream &ostream = std::cout,
+            Io *io = NULL);
 
   /**
    * \brief Zawiera możliwe do wyboru opcje.
@@ -58,14 +70,13 @@ public:
   /**
    * \biref Pobiera od użytkownika odpowiedz.
    *
-   * Pobiera od użytkownika klucz do polecenia z menu głównego oraz wykonuje polecenie.
+   * Pobiera od użytkownika klucz do polecenia z menu głównego oraz wykonuje
+   * polecenie.
    *
    * \throws string - Kiedy podana przez użytkownika komenda jest pusta
    * \throws string - Kiedy polecenie jest nieznane
    */
-   void getCommandAndExecute();
-
+  void getCommandAndExecute();
 };
-
 
 #endif // INTERFACE_HH
