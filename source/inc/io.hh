@@ -40,6 +40,14 @@ public:
    * \return wskaźnik do otwartego strumienia
    */
   std::istream * openCommandsFile(const char *fileName);
+
+  /**
+   * \brief Zwraca strumień do pluku otwartego przez \link openCommandsFile(const char *fileName) \endlink.
+   *
+   * \return wskaźnik do otwartego strumienia
+   */
+  std::istream * getCommandsStream();
+
 };
 
 

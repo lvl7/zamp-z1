@@ -1,29 +1,23 @@
 #include "Interface.hh"
 
-
-Interface::Interface(std::istream &istream, std::ostream &ostream, Io * io)
+Interface::Interface(std::istream &istream, std::ostream &ostream, Io *io)
     : _istream(istream), _ostream(ostream), _io(io) {
 
-      initMainMenu();
+  initMainMenu();
 }
 
-void Interface::initMainMenu(){
+void Interface::initMainMenu() {
   mainMenuFeatures.push_back(std::make_pair(
-      "w", "wczytanie nazwy pliku sekwencji instrukcji dla drona"));
-  mainMenuFeatures.push_back(std::make_pair(
-      "k", "zakończ program"));
+      "w", "wczytaj plik z sekwencą instrukcji dla drona o podanej nazwie"));
+  mainMenuFeatures.push_back(std::make_pair("g", "wykonaj program"));
+  mainMenuFeatures.push_back(std::make_pair("k", "zakończ program"));
 }
 
 void Interface::printMainMenu() {
   for (auto &commend : mainMenuFeatures) {
-      _ostream << " "
-               << commend.first
-               << "  -  "
-               << commend.second
-               << std::endl;
+    _ostream << " " << commend.first << "  -  " << commend.second << std::endl;
   }
 }
-
 
 void Interface::getCommandAndExecute() {
   std::string commandKey;
@@ -38,10 +32,13 @@ void Interface::getCommandAndExecute() {
   // TODO change commands to class with execute method.
   switch (commandKey[0]) {
   case 'w':
-    _ostream << "chose W" << std::endl;
+    readCommandFile();
     break;
   case 'k':
     _ostream << "chose k" << std::endl;
+    break;
+  case 'g':
+    _ostream << "chose g" << std::endl;
     break;
   default:
     std::string errorComunicate = "Nieobsługiwane polecenie [";
@@ -50,4 +47,23 @@ void Interface::getCommandAndExecute() {
 
     throw errorComunicate;
   }
+}
+
+void Interface::readCommandFile() {
+  _ostream << "Podaj nazwę pliku: ";
+
+  rl_bind_key('\t', rl_complete);
+
+  char *fileName;
+
+  fileName = readline(nullptr);
+
+  std::istringstream response;
+  response.str(fileName);
+  free(fileName);
+  std::string responseString;
+  response >> responseString;
+
+  // TODO cach wrong name
+  _io->openCommandsFile(responseString.c_str());
 }

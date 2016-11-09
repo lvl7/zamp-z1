@@ -16,3 +16,7 @@ std::istream * Io::openCommandsFile(const char *fileName){
 
   return &_commandsStream;
 }
+
+std::istream * Io::getCommandsStream(){
+  return &_commandsStream;
+}

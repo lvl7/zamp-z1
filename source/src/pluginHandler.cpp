@@ -2,7 +2,9 @@
 
 PluginHandler::PluginHandler() { loadPlugins(); }
 PluginHandler::~PluginHandler() {
-  for (const auto &plg : _plugins) {
+  //TODO make core dump
+  for (auto &plg : _plugins) {
+
     dlclose(plg.second);
   }
 }
