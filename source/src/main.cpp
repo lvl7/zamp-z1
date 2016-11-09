@@ -2,11 +2,16 @@
 #include <iostream>
 #include <memory>
 
+#include <cstdio>
+#include <sstream>
+
+
 #include "DronePose.hh"
 #include "Interface.hh"
 #include "Interp4Command.hh"
 #include "io.hh"
 #include "pluginHandler.hh"
+
 
 int main(int argc, char **argv) {
 

@@ -1,7 +1,9 @@
 #include "Interface.hh"
 
-Interface::Interface(std::istream &istream, std::ostream &ostream, Io *io)
-    : _istream(istream), _ostream(ostream), _io(io) {
+Interface::Interface(std::istream &istream, std::ostream &ostream, Io *io,
+                     CommandInterpreter *commandInterpreter)
+    : _istream(istream), _ostream(ostream), _io(io),
+      _commandInterpreter(commandInterpreter) {
 
   initMainMenu();
 }
@@ -61,6 +63,7 @@ void Interface::readCommandFile() {
   std::istringstream response;
   response.str(fileName);
   free(fileName);
+
   std::string responseString;
   response >> responseString;
 

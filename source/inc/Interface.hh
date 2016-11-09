@@ -13,8 +13,15 @@
 
 
 #include "io.hh"
+#include "commandInterpreter.hh"
 
-// TODO opis
+
+/**
+ * \brief Klasa definiująca interface programu.
+ *
+ * Zapewnia interakcje z użytkownikiem. Wyświetla menu, wczytuje odpowiedzi.
+ * Wywołuje odpowiednie metody by spełnić polecenia wydane przez użytkownika.
+ */
 class Interface {
 private:
   /**
@@ -36,7 +43,7 @@ private:
    *
    * Określony poprzez \link Io::openCommandsFile(const char *fileName); \endlink
    */
-  std::istream *_commandFile;
+  std::istringstream *_commandFile;
 
   /**
    * \brief Przechowuje dostępne polecenia w menu głównym
@@ -52,6 +59,15 @@ private:
    */
   Io *_io;
 
+
+    /**
+     * \biref Wskaźnik do interpretora pliku zawierającego komendy sterowania dronem
+     *
+     * Definiowany w konstruktorze
+     */
+    CommandInterpreter *_commandInterpreter;
+
+
 public:
   /**
    * \brief Konstruktor.
@@ -65,7 +81,7 @@ public:
    * zapisywanie do plików
    */
   Interface(std::istream &istream = std::cin, std::ostream &ostream = std::cout,
-            Io *io = NULL);
+            Io *io = nullptr,  CommandInterpreter *commandInterpreter = nullptr);
   /**
    * \brief Drukuje menu z dostepnymi opcjami
    *
