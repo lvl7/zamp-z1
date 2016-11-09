@@ -65,5 +65,5 @@ void Interface::readCommandFile() {
   response >> responseString;
 
   // TODO cach wrong name
-  _io->openCommandsFile(responseString.c_str());
+  _commandFile = _io->openCommandsFile(responseString.c_str());
 }

@@ -32,6 +32,13 @@ private:
   std::ostream &_ostream;
 
   /**
+   * \brief Przechowuje strumien wejściowy pliku z komendami
+   *
+   * Określony poprzez \link Io::openCommandsFile(const char *fileName); \endlink
+   */
+  std::istream *_commandFile;
+
+  /**
    * \brief Przechowuje dostępne polecenia w menu głównym
    *
    * Tablica par składających się z klucza odpowiedzi oraz opisu polecenia.
