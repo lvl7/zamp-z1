@@ -6,11 +6,16 @@ set(CMAKE_CXX_COMPILER clang++)
 
 
 set( flags "-std=c++11" )
-set( flagsCoverage "-Wall -pedantic" )
-set( flagsLinker "-ldl")
 
+set( flagsCoverage "${flagsCoverage} -Wall" )
+set( flagsCoverage "${flagsCoverage} -pedantic" )
 set( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${flags} ${flagsCoverage}" )
+
+set( flagsLinker "${flagsLinker} -ldl")
+set( flagsLinker "${flagsLinker} -lreadline")
+set( flagsLinker "${flagsLinker} -ltermcap")
 set( CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} ${flagsLinker}" )
+
 
 
 # make plugins

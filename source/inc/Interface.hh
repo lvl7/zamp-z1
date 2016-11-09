@@ -6,6 +6,12 @@
 #include <utility>
 #include <vector>
 
+#include <sstream>
+#include <cstdlib>
+#include <readline/readline.h>
+#include <readline/history.h>
+
+
 #include "io.hh"
 
 // TODO opis
@@ -24,6 +30,13 @@ private:
    * Określany przez konstruktor.
    */
   std::ostream &_ostream;
+
+  /**
+   * \brief Przechowuje strumien wejściowy pliku z komendami
+   *
+   * Określony poprzez \link Io::openCommandsFile(const char *fileName); \endlink
+   */
+  std::istream *_commandFile;
 
   /**
    * \brief Przechowuje dostępne polecenia w menu głównym
@@ -53,13 +66,6 @@ public:
    */
   Interface(std::istream &istream = std::cin, std::ostream &ostream = std::cout,
             Io *io = NULL);
-
-  /**
-   * \brief Zawiera możliwe do wyboru opcje.
-   *
-   *  Dodaje do zbioru opcji opcje. Klucz oraz treść.
-   */
-  void initMainMenu();
   /**
    * \brief Drukuje menu z dostepnymi opcjami
    *
@@ -77,6 +83,21 @@ public:
    * \throws string - Kiedy polecenie jest nieznane
    */
   void getCommandAndExecute();
+
+private:
+  /**
+   * \brief Zawiera możliwe do wyboru opcje.
+   *
+   *  Dodaje do zbioru opcji opcje. Klucz oraz treść.
+   */
+  void initMainMenu();
+
+  /**
+   * \brief Wypisuje komunikat z prośbą o podanie nazwy pliku oraz go otwiera.
+   *
+   * Wypisuje komunikat oraz otwiera plik za pomocą klasy \link Io \endlink
+   */
+  void readCommandFile();
 };
 
 #endif // INTERFACE_HH

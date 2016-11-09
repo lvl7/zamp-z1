@@ -46,4 +46,6 @@ int main(int argc, char **argv) {
 
   interface->printMainMenu();
   interface->getCommandAndExecute();
+
+  std::cout << "-------------------" << std::endl;
 }
