@@ -4,8 +4,8 @@
  */
 
 Fly 2 1 30 // Start niezbyt szybki
-Fly 0 0 0 // A zatrzymajmy
-Rotate ROTATE_SPEED 40
+Fly 0 2 9 // A zatrzymajmy
+Rotate 2 40
 Fly 0 0 0
 Rotate 30 60
 Turn 10 20 20

@@ -19,7 +19,16 @@ void CommandInterpreter::interprete(std::istringstream *commandFile){
   Interp4Command * plugin;
 
   while(str >> command){
+
     plugin = _pluginHandler->getPluginByName(command);
+
+    if(!plugin){
+      std::string errorComunicate = "Brak wtyczki obsługującej polecenie: [";
+      errorComunicate += command;
+      errorComunicate += "]";
+      throw errorComunicate;
+    }
+    
     plugin->ReadParams(str);
     plugin->ExecCmd( pRobPose, nullptr);
   }
