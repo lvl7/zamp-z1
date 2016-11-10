@@ -38,7 +38,7 @@ bool Interp4Fly::ExecCmd(DronePose *pRobPose, Visualization *pVis) const {
   return true;
 }
 
-bool Interp4Fly::ReadParams(std::istream &istream) {
+bool Interp4Fly::ReadParams(std::istringstream &istream) {
 
   std::string param;
 

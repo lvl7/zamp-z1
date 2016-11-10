@@ -4,6 +4,8 @@
 #include <fstream>
 #include <sstream>
 
+#include <iostream>
+
 #define READ_LINE_SIZE 500
 
 /**

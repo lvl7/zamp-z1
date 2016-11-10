@@ -6,15 +6,14 @@
 #include <utility>
 #include <vector>
 
-#include <sstream>
 #include <cstdlib>
-#include <readline/readline.h>
+#include <memory>
 #include <readline/history.h>
+#include <readline/readline.h>
+#include <sstream>
 
-
-#include "io.hh"
 #include "commandInterpreter.hh"
-
+#include "io.hh"
 
 /**
  * \brief Klasa definiująca interface programu.
@@ -41,7 +40,8 @@ private:
   /**
    * \brief Przechowuje strumien wejściowy pliku z komendami
    *
-   * Określony poprzez \link Io::openCommandsFile(const char *fileName); \endlink
+   * Określony poprzez \link Io::openCommandsFile(const char *fileName);
+   * \endlink
    */
   std::istringstream *_commandFile;
 
@@ -57,16 +57,15 @@ private:
    *
    * Wskaźnik do klasy \link Io \endlink.
    */
-  Io *_io;
+  std::unique_ptr<Io> _io;
 
-
-    /**
-     * \biref Wskaźnik do interpretora pliku zawierającego komendy sterowania dronem
-     *
-     * Definiowany w konstruktorze
-     */
-    CommandInterpreter *_commandInterpreter;
-
+  /**
+   * \biref Wskaźnik do interpretora pliku zawierającego komendy sterowania
+   * dronem
+   *
+   * Definiowany w konstruktorze
+   */
+  std::unique_ptr<CommandInterpreter> _commandInterpreter;
 
 public:
   /**
@@ -77,11 +76,9 @@ public:
    *
    * \param[in] istream - srumień z którego będą pobierane polecenia
    * \param[out] ostream - srumień na który będzie wyświetlane menu
-   * \param[int/out] io - wskaźnik na klasę odpowiedzialną za pobieranie i
-   * zapisywanie do plików
    */
-  Interface(std::istream &istream = std::cin, std::ostream &ostream = std::cout,
-            Io *io = nullptr,  CommandInterpreter *commandInterpreter = nullptr);
+  Interface(std::istream &istream = std::cin,
+            std::ostream &ostream = std::cout);
   /**
    * \brief Drukuje menu z dostepnymi opcjami
    *

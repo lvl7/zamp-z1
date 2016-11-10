@@ -2,8 +2,9 @@
 #define COMMAND_INTERPRETER_HH
 
 #include <iostream>
-
-
+#include <memory>
+#include <sstream>
+#include <string>
 
 #include "commandInterpreter.hh"
 #include "pluginHandler.hh"
@@ -14,21 +15,12 @@
  * Odczytuje plik linia po linii i wywołuje odpowiednie pluginy.
  */
 class CommandInterpreter {
-
-  /**
-   * \brief Przechowuje strumien wejściowy pliku z komendami
-   *
-   * Określony poprzez \link Io::openCommandsFile(const char *fileName);
-   * \endlink
-   */
-  std::istream *_commandFile;
-
   /**
    * \brief Wskaznik do zarządcy pluginami.
    *
    * Definiowany w konstruktorze.
    */
-  PluginHandler *_pluginHandler;
+  std::unique_ptr<PluginHandler> _pluginHandler;
 
 public:
   /**
@@ -36,20 +28,19 @@ public:
    *
    * Przypisuje pola podane w argumentach funkcji do pól klasy.
    *
-   * \param[in] commandFile - strumien na plik wejściowy z komendami sterującymi
-   * dronem
-   * \param[out] pluginHandler - do wywoływania wtyczek
    */
-  CommandInterpreter(std::iostream *commandFile, PluginHandler *pluginHandler);
+  CommandInterpreter();
 
   /**
    *  \biref Rozpoczyna przetwarzanie komend.
    *
    *  Interpretuje komendy zawrte w pliku na które wskazuje \link _commandFile
    * \endlink
+   *
+   * \param[in] commandFile - strumien na plik wejściowy z komendami sterującymi
+   * dronem
    */
-  void interprete();
-
+  void interprete(std::istringstream *commandFile);
 };
 
 #endif // COMMAND_INTERPRETER_HH

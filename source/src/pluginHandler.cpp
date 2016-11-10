@@ -3,10 +3,10 @@
 PluginHandler::PluginHandler() { loadPlugins(); }
 PluginHandler::~PluginHandler() {
   //TODO make core dump
-  for (auto &plg : _plugins) {
-
-    dlclose(plg.second);
-  }
+  // for (auto &plg : _plugins) {
+  //
+  //   dlclose(plg.second);
+  // }
 }
 
 void PluginHandler::loadPlugins() {
@@ -19,6 +19,8 @@ void PluginHandler::loadPlugins() {
   // TODO change to find names in the plugins folder
   std::vector<const char *> plugins;
   plugins.push_back("libInterp4Fly.so");
+  plugins.push_back("libInterp4Rotate.so");
+  plugins.push_back("libInterp4Turn.so");
 
   for (auto &pluginName : plugins) {
     void *lib = dlopen(pluginName, RTLD_LAZY);

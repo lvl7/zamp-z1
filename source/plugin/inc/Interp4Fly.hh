@@ -8,6 +8,7 @@
 
 #include "Interp4Command.hh"
 #include <cmath>
+#include <sstream>
 
 
 // TODO
@@ -72,7 +73,7 @@ public:
   /*!
      * \brief
      */
-  virtual bool ReadParams(std::istream &Strm_CmdsList);
+  virtual bool ReadParams(std::istringstream &Strm_CmdsList);
   // TODO
   /*!
      * \brief
