@@ -2,6 +2,12 @@
 #define IO_HH
 
 #include <fstream>
+#include <sstream>
+
+#include <iostream>
+
+#define READ_LINE_SIZE 500
+
 /**
  * \brief klasa odpowiedzialna za komunikacje z plikami
  *
@@ -15,23 +21,9 @@ private:
    * Zawiera komendy takie jak no Fly (patrz klasy dziedziczące \link
    * Interp4Command \endlink )
    */
-  std::ifstream _commandsStream;
+  std::istringstream _commandsStream;
 
 public:
-  /**
-   * \brief Konstruktor klasy Io
-   *
-   * Konstruktor klasy Io
-   */
-  Io();
-
-  /**
-   * \brief Destruktor. Zamyka wszystkei otwarte strumienie
-   *
-   * Zamyka wszsytkie otwarte strumienie
-   */
-  ~Io();
-
   /**
    * \brief Otwiera plik z poleceniami dla drona.
    *
@@ -39,17 +31,15 @@ public:
    *
    * \return wskaźnik do otwartego strumienia
    */
-  std::istream * openCommandsFile(const char *fileName);
+  std::istringstream *openCommandsFile(const char *fileName);
 
   /**
-   * \brief Zwraca strumień do pluku otwartego przez \link openCommandsFile(const char *fileName) \endlink.
+   * \brief Zwraca strumień do pluku otwartego przez \link
+   * openCommandsFile(const char *fileName) \endlink.
    *
    * \return wskaźnik do otwartego strumienia
    */
-  std::istream * getCommandsStream();
-
+  std::istringstream *getCommandsStream();
 };
-
-
 
 #endif // IO_HH

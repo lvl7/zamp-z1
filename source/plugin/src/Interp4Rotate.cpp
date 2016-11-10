@@ -42,7 +42,7 @@ bool Interp4Rotate::ExecCmd(DronePose *pRobPose, Visualization *pVis) const {
   return true;
 }
 
-bool Interp4Rotate::ReadParams(std::istream &istream) {
+bool Interp4Rotate::ReadParams(std::istringstream &istream) {
 
   std::string param;
 

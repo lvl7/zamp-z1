@@ -1,22 +1,31 @@
 #include "io.hh"
 
-Io::Io(){
+std::istringstream *Io::openCommandsFile(const char *fileName) {
+  std::string commandForPreprocessor = "cpp -P ";
+  commandForPreprocessor += fileName;
 
-}
+  char line[READ_LINE_SIZE];
 
-Io::~Io(){
-  _commandsStream.close();
-}
+  std::ostringstream lineStreamString;
 
-std::istream * Io::openCommandsFile(const char *fileName){
+  FILE *commandsFile = popen(commandForPreprocessor.c_str(), "r");
+  if (!commandsFile) {
+    std::string errorComunicate = "Plik o nazwie: [";
+    errorComunicate += fileName;
+    errorComunicate += " ] nieznaleziony.";
 
-  //TODO add wrong file name exceptions
-  //TODO add exception if the stream is already opended
-  _commandsStream.open(fileName);
+    throw errorComunicate;
+  }
+
+  while (fgets(line, READ_LINE_SIZE, commandsFile)) {
+    lineStreamString << line;
+  }
+
+  _commandsStream.str(lineStreamString.str());
+
+  pclose(commandsFile);
 
   return &_commandsStream;
 }
 
-std::istream * Io::getCommandsStream(){
-  return &_commandsStream;
-}
+std::istringstream *Io::getCommandsStream() { return &_commandsStream; }

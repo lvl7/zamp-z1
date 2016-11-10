@@ -4,6 +4,7 @@
 #include "DronePose.hh"
 #include "Visualization.hh"
 #include <iostream>
+#include <sstream>
 
 #define PI_MATH_CONST 3.14159265359
 #define TIME_INTERVAL_MS 200
@@ -66,7 +67,7 @@ public:
   /**
       * \brief
       */
-  virtual bool ReadParams(std::istream &Strm_CmdsList) = 0;
+  virtual bool ReadParams(std::istringstream &Strm_CmdsList) = 0;
 
   /**
    * \brief Tworzy komunikat błędu gdy wczytane są nieprawidłowe dane.
