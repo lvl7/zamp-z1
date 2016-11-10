@@ -51,9 +51,16 @@ bool Interp4Fly::ReadParams(std::istringstream &istream) {
 
   istream >> param;
   setField(param, _distance_m, "dist", NULL);
-  if (_distance_m <= 0) {
-    throw makeErrorComunicate(param, "hor_velocity",
-                              "Dystans musi być dodatni.");
+
+  if ((_velocityHorizontal_mPs == 0 && _velocityVertical_mPs == 0) &&
+      _distance_m != 0) {
+    throw makeErrorComunicate(
+        param, "distance",
+        "Gdy prędkości są równe 0, dystans również musi być 0.");
+  } else if ((_velocityHorizontal_mPs == !0 || _velocityVertical_mPs != 0) &&
+             _distance_m <= 0) {
+
+    throw makeErrorComunicate(param, "distance", "Dystans musi być dodatni.");
   }
 
   return true;

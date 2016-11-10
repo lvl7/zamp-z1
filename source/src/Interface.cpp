@@ -52,7 +52,14 @@ void Interface::getCommandAndExecute() {
     end = true;
     break;
   case 'g':
-    _commandInterpreter->interprete(_commandFile);
+    try{
+      _commandInterpreter->interprete(_commandFile);
+    }
+    catch(std::string s){
+      std::cerr << s << std::endl;
+      end = true;
+    }
+
     break;
   default:
     std::string errorComunicate = "Nieobsługiwane polecenie [";
