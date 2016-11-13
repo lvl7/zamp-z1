@@ -4,8 +4,8 @@ PluginHandler::PluginHandler() { loadPlugins(); }
 PluginHandler::~PluginHandler() {
   // TODO make core dump
   for (auto &plg : _plugins) {
-
-    dlclose(plg.second);
+    delete plg.second.first;
+    dlclose(plg.second.second);
   }
 }
 
@@ -44,7 +44,8 @@ void PluginHandler::loadPlugins() {
 
     Interp4Command *command = commandCreate();
 
-    _plugins[command->GetCmdName()] = command;
+    _plugins[command->GetCmdName()].first = command;
+    _plugins[command->GetCmdName()].second = lib;
   }
 }
 
@@ -52,7 +53,7 @@ Interp4Command *PluginHandler::getPluginByName(std::string name) {
   auto result = _plugins.find(name);
 
   if (result != _plugins.end()) {
-    return result->second;
+    return result->second.first;
   }
   return nullptr;
 }
