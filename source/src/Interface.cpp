@@ -54,6 +54,7 @@ void Interface::getCommandAndExecute() {
   case 'g':
     try{
       _commandInterpreter->interprete(_commandFile);
+      std::cout << "Wygenerowano plik ze wspórzędnymi" << std::endl;
     }
     catch(std::string s){
       std::cerr << s << std::endl;

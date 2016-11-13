@@ -10,14 +10,13 @@
 
 #include "Interp4Command.hh"
 
-// TODO
-/**
- * file
- */
-
-// TODO
-/**
- * class
+/*!
+ * \brief Modeluje polecenie dla robota mobilnego, które wymusza jego ruch obrotowy.
+ *
+ * Nalezy ustawić kąt obrotu oraz prędkość.
+ * Wartość kąta dodatnia wartość oznacza obrót w lewo.
+ * Wartosć kąta ujemna wartość oznacza obrót w prawo.
+ *
  */
 class Interp4Rotate : public Interp4Command {
 private:

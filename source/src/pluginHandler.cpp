@@ -2,19 +2,14 @@
 
 PluginHandler::PluginHandler() { loadPlugins(); }
 PluginHandler::~PluginHandler() {
-  //TODO make core dump
-  // for (auto &plg : _plugins) {
-  //
-  //   dlclose(plg.second);
-  // }
+  // TODO make core dump
+  for (auto &plg : _plugins) {
+
+    dlclose(plg.second);
+  }
 }
 
 void PluginHandler::loadPlugins() {
-  // std::ofstream coordFile;
-  // coordFile.open("coords.txt");
-  //
-  //
-  // std::unique_ptr<DronePose> drone(new DronePose);
 
   // TODO change to find names in the plugins folder
   std::vector<const char *> plugins;
