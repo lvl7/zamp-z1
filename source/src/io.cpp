@@ -1,6 +1,7 @@
 #include "io.hh"
 
 std::istringstream *Io::openCommandsFile(const char *fileName) {
+
   std::string commandForPreprocessor = "cpp -P ";
   commandForPreprocessor += fileName;
 

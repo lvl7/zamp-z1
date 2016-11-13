@@ -58,7 +58,7 @@ public:
   /*!
      * \brief
      */
-  virtual void PrintSyntax() const;
+  virtual void PrintSyntax(std::ostream & ostr) const;
   // TODO
   /*!
      * \brief

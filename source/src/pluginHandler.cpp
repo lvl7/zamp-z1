@@ -61,3 +61,7 @@ Interp4Command *PluginHandler::getPluginByName(std::string name) {
   }
   return nullptr;
 }
+
+std::map<std::string, Interp4Command* > * PluginHandler::getPlugins(){
+  return &_plugins;
+}

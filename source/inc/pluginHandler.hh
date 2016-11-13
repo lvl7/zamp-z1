@@ -48,6 +48,12 @@ public:
    */
   Interp4Command * getPluginByName(std::string name);
 
+  /**
+   * \biref Zwraca pluginy.
+   *
+   * Zwraca wskaźnik na wszystkie wczytane pluginy.
+   */
+  std::map<std::string, Interp4Command* > * getPlugins();
 private:
   /**
    * \brief Wczytuje wtyczki

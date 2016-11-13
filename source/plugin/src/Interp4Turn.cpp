@@ -16,8 +16,8 @@ void Interp4Turn::PrintCmd() const {
 }
 
 // TODO move filed names to static strings
-void Interp4Turn::PrintSyntax() const {
-  std::cout << "   Turn  velocity[m/s]  arc[m/s]  radius[m]" << std::endl;
+void Interp4Turn::PrintSyntax(std::ostream & ostr) const {
+  ostr << "   Turn  velocity[m/s]  arc[m/s]  radius[m]" << std::endl;
 }
 
 const char *Interp4Turn::GetCmdName() const { return "Turn"; }

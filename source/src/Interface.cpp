@@ -9,8 +9,7 @@ Interface::Interface(std::istream &istream, std::ostream &ostream)
   std::unique_ptr<CommandInterpreter> commandInterpreter(
       new CommandInterpreter());
 
-      _commandInterpreter = std::move(commandInterpreter);
-
+  _commandInterpreter = std::move(commandInterpreter);
 
   // std::unique_ptr<CommandInterpreter> commandInterpreter(new
   // CommandInterpreter());
@@ -21,7 +20,9 @@ void Interface::initMainMenu() {
   mainMenuFeatures.push_back(std::make_pair(
       "w", "wczytaj plik z sekwencją instrukcji dla drona o podanej nazwie"));
   mainMenuFeatures.push_back(std::make_pair("g", "wykonaj program"));
-  mainMenuFeatures.push_back(std::make_pair("k", "zakończ program"));
+  mainMenuFeatures.push_back(std::make_pair("p", "wyświetl dostępne komendy"));
+  mainMenuFeatures.push_back(std::make_pair("q", "zakończ program"));
+
 }
 
 void Interface::printMainMenu() {
@@ -48,28 +49,33 @@ void Interface::getCommandAndExecute() {
   case 'w':
     readCommandFile();
     break;
-  case 'k':
+  case 'q':
     end = true;
     break;
+  case 'p':
+    showAvailableCommands();
+    break;
   case 'g':
-    try{
+    try {
       _commandInterpreter->interprete(_commandFile);
-    }
-    catch(std::string s){
+    } catch (std::string s) {
       std::cerr << s << std::endl;
       end = true;
     }
 
     break;
   default:
+    _ostream << std::endl;
+
     std::string errorComunicate = "Nieobsługiwane polecenie [";
     errorComunicate += commandKey[0];
     errorComunicate += "]";
+    _ostream << errorComunicate;
 
-    throw errorComunicate;
+    _ostream << std::endl;
   }
 
-  if(!end){
+  if (!end) {
     printMainMenu();
     getCommandAndExecute();
   }
@@ -95,4 +101,10 @@ void Interface::readCommandFile() {
   _commandFile = _io->openCommandsFile(responseString.c_str());
 
   _ostream << "Wczytano pomyślnie." << std::endl;
+}
+
+void Interface::showAvailableCommands(){
+  for( auto  plugin : *_commandInterpreter->getPluginHandler()->getPlugins()){
+    plugin.second->PrintSyntax(_ostream);
+  }
 }
