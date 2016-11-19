@@ -1,17 +1,19 @@
 #include "commandInterpreter.hh"
 
-CommandInterpreter::CommandInterpreter()
+CommandInterpreter::CommandInterpreter(Visualizer *visualizer):
+  _visualizer(visualizer)
     {
       std::unique_ptr<PluginHandler> pluginHandler(new PluginHandler());
       _pluginHandler = std::move(pluginHandler);
+
+      std::unique_ptr<DronePose> dronePose(new DronePose());
+      _dronePose = std::move(dronePose);
     }
 
 
 void CommandInterpreter::interprete(std::istringstream *commandFile){
 
-//TODO ----
-  DronePose *pRobPose = new DronePose();
-//TODO ====
+
 
   std::istringstream &str(*commandFile);
   std::string command;
@@ -30,7 +32,7 @@ void CommandInterpreter::interprete(std::istringstream *commandFile){
     }
 
     plugin->ReadParams(str);
-    plugin->ExecCmd( pRobPose, nullptr);
+    plugin->ExecCmd( _dronePose.get(), nullptr);
   }
 };
 

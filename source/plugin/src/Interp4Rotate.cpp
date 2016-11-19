@@ -23,7 +23,7 @@ void Interp4Rotate::PrintSyntax(std::ostream & ostr) const {
 
 const char *Interp4Rotate::GetCmdName() const { return "Rotate"; }
 
-bool Interp4Rotate::ExecCmd(DronePose *pRobPose, Visualization *pVis) const {
+bool Interp4Rotate::ExecCmd(DronePose *pRobPose, Visualizer *pVis) const {
   double dAng_deg;
 
   dAng_deg = _velocity_angular_degPs * TIME_INTERVAL_MS / 1000.0;

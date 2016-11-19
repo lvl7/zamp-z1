@@ -6,13 +6,14 @@ Interface::Interface(std::istream &istream, std::ostream &ostream)
   std::unique_ptr<Io> io(new Io());
   _io = std::move(io);
 
+  std::unique_ptr<Visualizer> visualizer;
+  _visualizer = std::move(visualizer);
+
   std::unique_ptr<CommandInterpreter> commandInterpreter(
-      new CommandInterpreter());
+      new CommandInterpreter(_visualizer.get()));
 
   _commandInterpreter = std::move(commandInterpreter);
 
-  // std::unique_ptr<CommandInterpreter> commandInterpreter(new
-  // CommandInterpreter());
   initMainMenu();
 }
 

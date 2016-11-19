@@ -1,10 +1,11 @@
 #ifndef INTERP4COMMAND_HH
 #define INTERP4COMMAND_HH
 
-#include "DronePose.hh"
-#include "Visualization.hh"
 #include <iostream>
 #include <sstream>
+
+#include "DronePose.hh"
+#include "visualizer.hh"
 
 #define PI_MATH_CONST 3.14159265359
 #define TIME_INTERVAL_MS 200
@@ -62,7 +63,7 @@ public:
   /**
       * \brief
       */
-  virtual bool ExecCmd(DronePose *pRobPose, Visualization *pVis) const = 0;
+  virtual bool ExecCmd(DronePose *pRobPose, Visualizer *pVis) const = 0;
   // TODO
   /**
       * \brief

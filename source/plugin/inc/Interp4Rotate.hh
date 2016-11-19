@@ -62,7 +62,7 @@ public:
   /*!
      * \brief
      */
-  virtual bool ExecCmd(DronePose *pRobPose, Visualization *pVis) const;
+  virtual bool ExecCmd(DronePose *pRobPose, Visualizer *pVis) const;
   // TODO
   /*!
      * \brief

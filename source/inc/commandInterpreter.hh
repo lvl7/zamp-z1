@@ -8,6 +8,7 @@
 
 #include "commandInterpreter.hh"
 #include "pluginHandler.hh"
+#include "visualizer.hh"
 
 /**
  * \brief Klasa do zarządzania plikiem z komendami sterującymi dronem
@@ -22,6 +23,21 @@ class CommandInterpreter {
    */
   std::unique_ptr<PluginHandler> _pluginHandler;
 
+
+  /**
+   * \brief Wskaźnik do zarządcy przechowującego współrzędne drona.
+   *
+   * Definiowany w konstruktorze.
+   */
+    std::unique_ptr<DronePose> _dronePose;
+
+    /**
+     * \brief Wskaźnik do obiektu zarządzającego wizualizacją
+     *
+     * Przychodzi jako parametr w konstruktorze.
+     */
+    Visualizer *_visualizer;
+
 public:
   /**
    * \brief Konstruktor.
@@ -29,7 +45,7 @@ public:
    * Przypisuje pola podane w argumentach funkcji do pól klasy.
    *
    */
-  CommandInterpreter();
+  CommandInterpreter(Visualizer *_visualizer);
 
   /**
    *  \biref Rozpoczyna przetwarzanie komend.
