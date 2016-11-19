@@ -28,8 +28,12 @@ void CommandInterpreter::interprete(std::istringstream *commandFile){
       errorComunicate += "]";
       throw errorComunicate;
     }
-    
+
     plugin->ReadParams(str);
     plugin->ExecCmd( pRobPose, nullptr);
   }
 };
+
+PluginHandler * CommandInterpreter::getPluginHandler(){
+  return _pluginHandler.get();
+}

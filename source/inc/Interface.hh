@@ -111,6 +111,14 @@ private:
    * Wypisuje komunikat oraz otwiera plik za pomocą klasy \link Io \endlink
    */
   void readCommandFile();
+
+  /**
+   * \brief Pokazuje dostepne komendy.
+   *
+   * Wyswietla wszystkie pluginy załączone w \link _commandInterpreter \endlink wraz
+   * z ich argumentami wywolania.
+   */
+  void showAvailableCommands();
 };
 
 #endif // INTERFACE_HH
