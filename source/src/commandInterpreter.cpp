@@ -33,3 +33,7 @@ void CommandInterpreter::interprete(std::istringstream *commandFile){
     plugin->ExecCmd( pRobPose, nullptr);
   }
 };
+
+PluginHandler * CommandInterpreter::getPluginHandler(){
+  return _pluginHandler.get();
+}

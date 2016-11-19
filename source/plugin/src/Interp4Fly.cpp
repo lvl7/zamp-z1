@@ -77,7 +77,7 @@ Interp4Command *Interp4Fly::CreateCmd() { return new Interp4Fly(); }
 /*!
  *
  */
-void Interp4Fly::PrintSyntax() const {
-  std::cout << "   Fly  hor_velocity[m/s]  ver_velocity[m/s]  dist[m]"
+void Interp4Fly::PrintSyntax(std::ostream & ostr) const {
+  ostr << "   Fly  hor_velocity[m/s]  ver_velocity[m/s]  dist[m]"
             << std::endl;
 }

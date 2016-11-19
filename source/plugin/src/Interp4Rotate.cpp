@@ -17,8 +17,8 @@ void Interp4Rotate::PrintCmd() const {
 }
 
 // TODO move filed names to static strings
-void Interp4Rotate::PrintSyntax() const {
-  std::cout << "   Rotate  angular_velocity[deg/s]  angle[deg]" << std::endl;
+void Interp4Rotate::PrintSyntax(std::ostream & ostr) const {
+  ostr << "   Rotate  angular_velocity[deg/s]  angle[deg]" << std::endl;
 }
 
 const char *Interp4Rotate::GetCmdName() const { return "Rotate"; }

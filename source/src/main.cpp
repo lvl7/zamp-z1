@@ -12,9 +12,8 @@
 #include "pluginHandler.hh"
 
 int main(int argc, char **argv) {
-
   std::unique_ptr<Interface> _interface(new Interface());
 
-  _interface->printMainMenu();
-  _interface->getCommandAndExecute();
+    _interface->printMainMenu();
+    _interface->getCommandAndExecute();
 }

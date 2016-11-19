@@ -41,6 +41,8 @@ public:
    * dronem
    */
   void interprete(std::istringstream *commandFile);
+
+  PluginHandler * getPluginHandler();
 };
 
 #endif // COMMAND_INTERPRETER_HH
