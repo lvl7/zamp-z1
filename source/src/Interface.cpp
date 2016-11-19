@@ -105,6 +105,6 @@ void Interface::readCommandFile() {
 
 void Interface::showAvailableCommands(){
   for( auto  plugin : *_commandInterpreter->getPluginHandler()->getPlugins()){
-    plugin.second->PrintSyntax(_ostream);
+    plugin.second.first->PrintSyntax(_ostream);
   }
 }

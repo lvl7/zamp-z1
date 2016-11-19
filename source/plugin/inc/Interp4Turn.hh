@@ -11,14 +11,16 @@
 #include "Interp4Command.hh"
 #include "Wektor3D.hh"
 
-// TODO
-/**
- * file
- */
 
-// TODO
-/**
- * class
+/*!
+ * \brief Modeluje polecenie dla robota mobilnego, które wymusza jego ruch po
+ * okregu o zadanym promieniu oraz prędkości.
+ *
+ * Nalezy ustawić prędkość, promień okręgu oraz dystans.
+ * Co do promienia:
+  * Wartość dodatnia oznacza iż dron skręca w prawo
+  * Wartość ujemna oznacza iż dron skręca w lewo
+  * Nie może być zerowy
  */
 class Interp4Turn : public Interp4Command {
 private:

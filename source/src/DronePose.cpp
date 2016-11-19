@@ -63,6 +63,8 @@ void DronePose::AddDeltaPos_m_deg(double xDelta_m, double yDelta_m,
 void DronePose::AfterUpdate() {
 
   _outFile << _coordinateWektor3_m.x() << "\t" << _coordinateWektor3_m.y()
-           << "\t" << _coordinateWektor3_m.z() << "\t" << _angle_deg
+           << "\t" << _coordinateWektor3_m.z() << "\t"
+           //TODO
+            // << _angle_deg
            << std::endl;
 }

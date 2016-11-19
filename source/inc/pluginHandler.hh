@@ -1,10 +1,11 @@
 #ifndef PLUGIN_HANDLER_HH
 #define PLUGIN_HANDLER_HH
 
+#include <dlfcn.h>
 #include <map>
 #include <string>
+#include <utility>
 #include <vector>
-#include <dlfcn.h>
 
 #include "Interp4Command.hh"
 
@@ -16,18 +17,20 @@
 class PluginHandler {
 private:
   /**
-   * \brief wektor map wtyczek
+   * \brief Wektor map wtyczek.
    *
-   * mapa wtyczek (patrz \link Interp4Command \endlink). Kluczem jest
-   * nazwa komendy.
+   * Mapa par wtyczek (patrz \link Interp4Command \endlink) ze wskaźnikiem na
+   * definicje metod wczytanych przez dlopen w funkcji \link loadPlugins()
+   * \endlink. Kluczem nazwa komendy.
    */
-  std::map<std::string, Interp4Command* > _plugins;
+  std::map<std::string, std::pair<Interp4Command *, void *>> _plugins;
 
 public:
   /**
    * \brief Konstruktor.
    *
-   * Wypełnia \link _plugins \endlink wtyczkami (patrz \link loadPlugins() \endlink ).
+   * Wypełnia \link _plugins \endlink wtyczkami (patrz \link loadPlugins()
+   * \endlink ).
    */
   PluginHandler();
 
@@ -44,16 +47,17 @@ public:
    *
    * \param[in]  name  - nazwa pluginu
    * \return     wskaźnik na plugin (patrz \link Interp4Command \endlink)
-   * \return     nullptr jeśli nie znaleziono pluginu o nazwie \link name \endlink
+   * \return     nullptr jeśli nie znaleziono pluginu o nazwie \link name
+   * \endlink
    */
-  Interp4Command * getPluginByName(std::string name);
+  Interp4Command *getPluginByName(std::string name);
 
   /**
    * \biref Zwraca pluginy.
    *
    * Zwraca wskaźnik na wszystkie wczytane pluginy.
    */
-  std::map<std::string, Interp4Command* > * getPlugins();
+  std::map<std::string, std::pair<Interp4Command *, void *> > * getPlugins();
 private:
   /**
    * \brief Wczytuje wtyczki
@@ -63,9 +67,6 @@ private:
    * \throws string - komunikat w przypadku błędnej nazwy wtyczki
    */
   void loadPlugins();
-
 };
-
-
 
 #endif // PLUGIN_HANDLER_HH

@@ -2,19 +2,14 @@
 
 PluginHandler::PluginHandler() { loadPlugins(); }
 PluginHandler::~PluginHandler() {
-  //TODO make core dump
-  // for (auto &plg : _plugins) {
-  //
-  //   dlclose(plg.second);
-  // }
+  // TODO make core dump
+  for (auto &plg : _plugins) {
+    delete plg.second.first;
+    dlclose(plg.second.second);
+  }
 }
 
 void PluginHandler::loadPlugins() {
-  // std::ofstream coordFile;
-  // coordFile.open("coords.txt");
-  //
-  //
-  // std::unique_ptr<DronePose> drone(new DronePose);
 
   // TODO change to find names in the plugins folder
   std::vector<const char *> plugins;
@@ -49,7 +44,8 @@ void PluginHandler::loadPlugins() {
 
     Interp4Command *command = commandCreate();
 
-    _plugins[command->GetCmdName()] = command;
+    _plugins[command->GetCmdName()].first = command;
+    _plugins[command->GetCmdName()].second = lib;
   }
 }
 
@@ -57,11 +53,11 @@ Interp4Command *PluginHandler::getPluginByName(std::string name) {
   auto result = _plugins.find(name);
 
   if (result != _plugins.end()) {
-    return result->second;
+    return result->second.first;
   }
   return nullptr;
 }
 
-std::map<std::string, Interp4Command* > * PluginHandler::getPlugins(){
-  return &_plugins;
+std::map<std::string, std::pair<Interp4Command *, void *> > * PluginHandler::getPlugins(){
+  return &_plugins ;
 }

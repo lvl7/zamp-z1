@@ -8,7 +8,7 @@ Interp4Command::makeErrorComunicate(std::string &errorParam,
                                     const char *additionalInforamtion) {
 
   std::string errorComunicate = GetCmdName();
-  errorComunicate += " | Niewsłaściwa nastawa: [ ";
+  errorComunicate += " | Niewłaściwa nastawa: [ ";
   errorComunicate += errorParam;
   errorComunicate += " ] dla ";
   errorComunicate += filedName;
