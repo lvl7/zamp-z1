@@ -15,13 +15,13 @@
 #include <list>
 #include <vector>
 
-#ifdef __GNUG__
-#pragma interface
-#endif
+// #ifdef __GNUG__
+// #pragma interface
+// #endif
 
 /*!
  * \file  lacze_do_gnuplota.hh
- *  
+ *
  *  Plik zawiera definicję klasy realizującej interfejs
  *  komunikacyjny do programu gnuplot.
  */
@@ -40,26 +40,26 @@ namespace PzG {
    *
    *  Typ wyliczeniowy określające dopuszczalne tryby rysowania
    *  realizowanego przez program \p gnuplot. Wybór trybu wiąże się
-   *  ze zmianą sposobu interpretacji danych zawartych pliku. Jeśli 
+   *  ze zmianą sposobu interpretacji danych zawartych pliku. Jeśli
    *  np. wybrany zostanie tryb 2D, to zakłada się, że w każdej linii
    *  pliku z danymi znajdują się wartości współrzędnych \e x, \e y.
    *  Wartości typu:
-   *   \li \p TR_2D - rysowanie w trybie 2D, co sprowadza się do 
+   *   \li \p TR_2D - rysowanie w trybie 2D, co sprowadza się do
    *                  rysowania wykresów funkcji jednej zmiennej.
    *   \li \p TR_3D - rysowanie w trybie 3D. Oznacza to możliwość
    *                  rysowania wykresów funkcji dwóch zmiennych.
-   *                 
+   *
    */
   enum TrybRysowania { TR_2D,  TR_3D };
   /*!
    * \brief Sposób rysowania linii
-   * 
+   *
    * Określa sposób rysowania linii.
    */
-  enum RodzajRysowania { RR_Ciagly /*! Linia ma być rysowana jako 
-                                       sekwencja punktów */, 
+  enum RodzajRysowania { RR_Ciagly /*! Linia ma być rysowana jako
+                                       sekwencja punktów */,
                          RR_Punktowy /*! Linia ma być rysowana ciągłą kreską */
-                       }; 
+                       };
 
   /*!
    * \brief Zestaw informacji dotyczący pliku i sposobu rysowania
@@ -80,8 +80,8 @@ namespace PzG {
       *                         polecenie \p gnuplot, a później na poziomie pracy tego programu
       *                         wykonać polecenie \p test.
       */
-      InfoPlikuDoRysowania(const char*      NazwaPliku, 
-                           RodzajRysowania  RodzRys, 
+      InfoPlikuDoRysowania(const char*      NazwaPliku,
+                           RodzajRysowania  RodzRys,
                            int              Szerokosc,
                            int              StylLinii
                           )
@@ -140,7 +140,7 @@ namespace PzG {
      */
       RodzajRysowania  _RodzRys;
     /*!
-     * \brief Decyduje o stylu linii. 
+     * \brief Decyduje o stylu linii.
      *
      *  Decyduje o stylu linii, co w przypadku rysownia na ekranie monitora
      *  oznacza wybór koloru wg tabeli gnuplota (generuje ją za pomocą polecenia test)
@@ -154,7 +154,7 @@ namespace PzG {
  *
  * Klasa realizuje interfejs do programu GNUPlot. Pozwala ona na wskazanie
  * zbioru punktów płaszczyzn umieszczonych w pliku lub plikach.
- * Każdy taki zbiór może być następnie wizualizowany przez program 
+ * Każdy taki zbiór może być następnie wizualizowany przez program
  * gnuplot w postaci oddzielnych płaszczyzn z wycinaniem części zasłanianych.
  */
 class LaczeDoGNUPlota {
@@ -183,7 +183,7 @@ class LaczeDoGNUPlota {
     *  \brief Decyduje czy mają być wyświetlane komunikaty o błędach,
     *         czy też nie.
     *
-    *  Wartość tego pola decyduje o tym czy komunikaty o błędach będą 
+    *  Wartość tego pola decyduje o tym czy komunikaty o błędach będą
     *  wyświetlane na wyjście standardowe błędów (\b cerr), czy też nie.
     *   \li \p true - komunikaty będę wyświetlane,
     *   \li \p false -  komunikaty nie będę wyświetlane.
@@ -193,10 +193,10 @@ class LaczeDoGNUPlota {
   /*!
    * \brief Określa aktualny tryb rysowania
    *
-   * Zawartość pola determinuje sposób rysowania, jaki zostanie 
+   * Zawartość pola determinuje sposób rysowania, jaki zostanie
    * wymuszony na programie \p gnuplot poprzez wysłanie do niego
    * odpowiednich poleceń. Wspomniane wymuszenie jest realizowane
-   * poprzez wywołanie polecenia 
+   * poprzez wywołanie polecenia
    * \link LaczeDoGNUPlota::Rysuj Rysuj()\endlink
    */
   TrybRysowania  _TrybRys;
@@ -237,12 +237,12 @@ class LaczeDoGNUPlota {
     */
   float  _Zmax;
    /*!
-    *  Wartość tego pola definiuje skalowanie rysunku wzdłuż osi 
+    *  Wartość tego pola definiuje skalowanie rysunku wzdłuż osi
     *  \e OX (oś horyzontalna ekranu).
     */
   float  _Xskala;
    /*!
-    *  Wartość tego pola definiuje skalowanie rysunku wzdłuż osi 
+    *  Wartość tego pola definiuje skalowanie rysunku wzdłuż osi
     *  \e OZ (oś wertykalna ekranu).
     */
   float  _Zskala;
@@ -282,11 +282,11 @@ class LaczeDoGNUPlota {
    * w klasach pochodnych powiększyć listę rysowanych elementów.
    * \pre Parametr \e Polecenie powinien zawierać polecenie \e plot lub \e splot,
    *      do którego będzie możliwe dopisanie dalszego ciągu.
-   * \param Polecenie - polecenie rysowania, do którego mają być dopisane 
+   * \param Polecenie - polecenie rysowania, do którego mają być dopisane
    *                    nazwy plików i odpowiednie parametry dla polecenia plot.
    * \param Sep - zawiera znak separatora między poszczególnymi
    *              parametrami. Jeżeli parametry listy przeszkód
-   *              są generowane jako pierwsze, to zmienna ta musi 
+   *              są generowane jako pierwsze, to zmienna ta musi
    *              być wskaźnikiem do wskaźnika na łańcuch: " ".
    */
   virtual bool DopiszPlikiDoPoleceniaRysowania( std::string &Polecenie, char const **Sep )
@@ -295,8 +295,8 @@ class LaczeDoGNUPlota {
   /*!
    *  \brief Tworzy polecenie ustawiające zakres dla danej współrzędnej.
    *
-   *  Tworzy polecenie dla programu \e gnuplot ustawiające zakres 
-   *  współrzędnych wybranej współrzędnej \e x, \e y lub \e z, 
+   *  Tworzy polecenie dla programu \e gnuplot ustawiające zakres
+   *  współrzędnych wybranej współrzędnej \e x, \e y lub \e z,
    *  dla której ma być tworzony dany rysunek.
    *  \param Os - zawiera znak określający współrzędną, dla której
    *             ma zostać wygenerowane polecenie ustawienia zakresu.
@@ -338,7 +338,7 @@ class LaczeDoGNUPlota {
   bool UtworzProcesPotomny();
   /*!
    * Wyświetla na wyjście "standard error" komunikat (przekazany jako
-   * parametr), o ile pole 
+   * parametr), o ile pole
    *   \link LaczeDoGNUPlota::_WyswietlajKomunikatyOBledach
    *          _WyswietlajKomunikatyOBledach\endlink  ma wartość
    * \p true. W przypadku przeciwnym komunikat nie jest wyświetlany.
@@ -476,7 +476,7 @@ class LaczeDoGNUPlota {
    */
   void UstawZakresY(float Yo, float Yn) { _Ymin = Yo;  _Ymax = Yn; }
   /*!
-   *  \brief Ustawia zakres osi \e OZ. 
+   *  \brief Ustawia zakres osi \e OZ.
    *
    * Ustawia zakres osi \e OZ. Ogranicza to obszar, który będzie
    * zwizualizowany przez programa \e gnuplot.
@@ -519,7 +519,7 @@ class LaczeDoGNUPlota {
    *  \param skala_x - skala wzdłuż osi \e OX.
    *  \param skala_z - skala wzdłuż osi \e OZ.
    */
-  void UstawSkaleXZ( float skala_x, float skala_z ) 
+  void UstawSkaleXZ( float skala_x, float skala_z )
           { UstawSkaleX(skala_x);  UstawSkaleZ(skala_z); }
 
   /*!
@@ -537,7 +537,7 @@ class LaczeDoGNUPlota {
    *
    * Zadaje kąt rotacji wokół osi \e OX. Umożliwia to zmianę
    * punktu obserwacji renderowanego rysunku.
-   * \param  kat_x - wartość kąta rotacji. Jego wartość podawana 
+   * \param  kat_x - wartość kąta rotacji. Jego wartość podawana
    *                 jest w stopniach.
    */
   void UstawRotacjeX( float kat_x ) { _Xrotacja = kat_x; }
@@ -546,25 +546,25 @@ class LaczeDoGNUPlota {
    *
    * Zadaje kąt rotacji wokół osi \e OZ. Umożliwia to zmianę
    * punktu obserwacji renderowanego rysunku.
-   * \param  kat_z - wartość kąta rotacji. Jego wartość podawana 
+   * \param  kat_z - wartość kąta rotacji. Jego wartość podawana
    *                 jest w stopniach.
    */
   void UstawRotacjeZ( float kat_z ) { _Zrotacja = kat_z; }
   /*!
    * \brief Ustawia rotację wokół osi \e OX i \e OZ.
    *
-   * Zadaje jednocześnie kąt rotacji wokół osi \e OX i \e OZ. 
+   * Zadaje jednocześnie kąt rotacji wokół osi \e OX i \e OZ.
    * Umożliwia to zmianę
    * punktu obserwacji renderowanego rysunku.
-   * \param  kat_x - wartość kąta rotacji względem osi \e OX. 
-   *                 Jego wartość podawana 
+   * \param  kat_x - wartość kąta rotacji względem osi \e OX.
+   *                 Jego wartość podawana
    *                 jest w stopniach.
-   * \param  kat_z - wartość kąta rotacji względem osi \e OZ. 
-   *                 Jego wartość podawana 
+   * \param  kat_z - wartość kąta rotacji względem osi \e OZ.
+   *                 Jego wartość podawana
    *                 jest w stopniach.
    */
-  void UstawRotacjeXZ( float kat_x, float kat_z ) 
-    { UstawRotacjeX(kat_x);  UstawRotacjeZ(kat_z); }  
+  void UstawRotacjeXZ( float kat_x, float kat_z )
+    { UstawRotacjeX(kat_x);  UstawRotacjeZ(kat_z); }
 
   /*!
    *  \brief Zezwala lub zabrania wyświetlania komunikatów.
@@ -599,15 +599,15 @@ class LaczeDoGNUPlota {
     * \retval true - jeżeli istnieje plik o nazwie udostępnionej poprzez
     *            parametr
     *            \e NazwaPliku oraz jest zezwolenie na jego czytanie.
-    *            Nazwa pliku zostaje dodana do listy plików z danymi 
+    *            Nazwa pliku zostaje dodana do listy plików z danymi
     *            dla \e gnuplota.
     * \retval false - Jeżeli nie istnieje plik o nazwie przekazanej poprzez
-    *            parametr \e NazwaPliku. 
-    *            Nazwa pliku zostaje dodana do listy plików z danymi 
+    *            parametr \e NazwaPliku.
+    *            Nazwa pliku zostaje dodana do listy plików z danymi
     *            dla \e gnuplota.
     */
-   bool DodajNazwePliku( const char       * NazwaPliku, 
-                         RodzajRysowania    RodzRys = RR_Ciagly, 
+   bool DodajNazwePliku( const char       * NazwaPliku,
+                         RodzajRysowania    RodzRys = RR_Ciagly,
                          int                Szerokosc = 1,
                          int                StylLinii = -1
                        );
@@ -623,16 +623,16 @@ class LaczeDoGNUPlota {
     * Informuje, czy połączenie z programem \e gnuplot jest zainicjowane.
     * \retval true - jeśli tak,
     * \retval false - w przypadku przeciwnym.
-    */ 
+    */
     bool CzyPolaczenieJestZainicjowane() const;
 
   /*!
    *  Jeżeli lista plików nie jest pusta, to generuje sekwencje poleceń
    *  dla programu \e gnuplot mająca na celu narysowanie płaszczyzn na
-   *  na podstawie danych zawartych w plikach z listy. 
+   *  na podstawie danych zawartych w plikach z listy.
    *
    *  \pre  Lista plików nie powinna być pusta. Nazwy plików na niej
-   *        można umieścić za pomoca metody 
+   *        można umieścić za pomoca metody
    *        \link LaczeDoGNUPlota::DodajNazwePliku DodajNazwePliku\endlink.
    *        Metoda nie wymaga wcześniejszego zainicjowania połączenia
    *        z \e gnuplotem.
@@ -644,10 +644,10 @@ class LaczeDoGNUPlota {
    */
   bool Rysuj();
   /*!
-   *  Działa analogicznie jak metoda 
-   *  \link LaczeDoGNUPlota::Rysuj Rysuj\endlink, z tą różnicą, że 
+   *  Działa analogicznie jak metoda
+   *  \link LaczeDoGNUPlota::Rysuj Rysuj\endlink, z tą różnicą, że
    *  rysunek robota
-   *  składowany jest w pliku o nazwie przekazanej przez parametr 
+   *  składowany jest w pliku o nazwie przekazanej przez parametr
    *  \e NazwaPliku.
    *  Rysunek jest zapisywany w formacie \e PNG.
    *
@@ -656,9 +656,9 @@ class LaczeDoGNUPlota {
    *        parametr \e NazwaPliku, do której dołączane jest rozszerzenie
    *        .ps .
    *        Metoda nie wymaga wcześniejszego zainicjowania połączenia
-   *        z programem \e gnuplot. 
+   *        z programem \e gnuplot.
    *
-   *  \retval true   - gdy zostają poprawnie wysłane polecenia dla 
+   *  \retval true   - gdy zostają poprawnie wysłane polecenia dla
    *                 \e gnuplota.
    *                 Nie oznacza to jednak, że proces rysowania zakończył
    *                 się pomyślnie.
@@ -676,7 +676,7 @@ class LaczeDoGNUPlota {
    *  poprzez przejęcie jego wejścia i wyjścia standardowego.
    *
    *  \retval true - gdy połączenie z programem \e 0gnuplot zostało poprawnie
-   *               zainicjalizowane lub gdy już wcześniej było 
+   *               zainicjalizowane lub gdy już wcześniej było
    *               zainicjalizowane.
    *  \retval false - gdy proces inicjalizacji połączenia zakończył się
    *               niepowodzeniem.
@@ -684,13 +684,13 @@ class LaczeDoGNUPlota {
   bool Inicjalizuj();
   /*!
    *  \brief Usuwa ostatnią nazwę pliku.
-   * 
+   *
    *  Usuwa ostatnią nazwę z listy nazw plików.
    */
   void UsunOstatniaNazwe();
   /*!
    *  \brief Kasuje zawartość listy nazw plików.
-   * 
+   *
    *  Calkowicie kasuje zawartość listy nazw plików.
    */
   void UsunWszystkieNazwyPlikow();

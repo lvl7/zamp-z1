@@ -16,4 +16,5 @@ int main(int argc, char **argv) {
 
     _interface->printMainMenu();
     _interface->getCommandAndExecute();
+
 }

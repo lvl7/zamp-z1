@@ -3,7 +3,8 @@
  * Przykładowy zestaw poleceń
  */
 
-Turn 10 20 -50
+Turn 10 75 -20
+Turn 10 75 40
 Fly 2 1 30 // Start niezbyt szybki
 Fly 0 2 9 // A zatrzymajmy
 Rotate 2 40
