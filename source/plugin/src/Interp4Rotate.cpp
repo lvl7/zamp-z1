@@ -37,9 +37,10 @@ bool Interp4Rotate::ExecCmd(DronePose *pRobPose, Visualizer *visualizer) const {
     }
 
     pRobPose->AddAngle_deg(dAng_deg);
+    usleep(TIME_INTERVAL_MS * 1000);
+    visualizer->Draw(pRobPose);
   }
 
-  visualizer->Draw(pRobPose);
 
   return true;
 }

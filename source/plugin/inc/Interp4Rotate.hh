@@ -7,6 +7,7 @@
 #endif
 
 #include <cmath>
+#include <unistd.h>
 
 #include "Interp4Command.hh"
 

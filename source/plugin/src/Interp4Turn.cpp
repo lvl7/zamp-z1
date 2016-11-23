@@ -66,10 +66,9 @@ bool Interp4Turn::ExecCmd(DronePose *pRobPose, Visualizer *visualizer) const {
     newY = center->y() + _radius_m * sin((newAngle - 90) * PI_MATH_CONST / 180);
 
     pRobPose->SetPos_m_deg(newX, newY, oldZ, newAngle);
-
+    usleep(TIME_INTERVAL_MS * 1000);
+    visualizer->Draw(pRobPose);
   }
-
-  visualizer->Draw(pRobPose);
 
   delete center;
   return true;

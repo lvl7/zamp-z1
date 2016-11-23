@@ -32,10 +32,13 @@ bool Interp4Fly::ExecCmd(DronePose *pRobPose, Visualizer *visualizer) const {
   while (flyedDistance < _distance_m) {
     flyedDistance += dL;
     pRobPose->AddDeltaPos_m(dx, dy, dz);
+    usleep(TIME_INTERVAL_MS * 1000);
+    visualizer->Draw(pRobPose);
   }
   pRobPose->AddDeltaPos_m(dx, dy, dz);
-
+  usleep(TIME_INTERVAL_MS * 1000);
   visualizer->Draw(pRobPose);
+
   return true;
 }
 
