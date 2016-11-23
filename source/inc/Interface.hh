@@ -14,6 +14,8 @@
 
 #include "commandInterpreter.hh"
 #include "io.hh"
+#include "visualizer.hh"
+
 
 /**
  * \brief Klasa definiująca interface programu.
@@ -63,9 +65,16 @@ private:
    * \biref Wskaźnik do interpretora pliku zawierającego komendy sterowania
    * dronem
    *
-   * Definiowany w konstruktorze
+   * Definiowany w konstruktorze.
    */
   std::unique_ptr<CommandInterpreter> _commandInterpreter;
+
+  /**
+   * \biref Wskaźnik na obiekt odpowiedzialny za wizualizację przelotu drona
+   *
+   * Definiowany w konstruktorze.
+   */
+  std::unique_ptr<Visualizer> _visualizer;
 
 public:
   /**

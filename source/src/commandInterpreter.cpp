@@ -1,28 +1,26 @@
 #include "commandInterpreter.hh"
 
-CommandInterpreter::CommandInterpreter()
-    {
-      std::unique_ptr<PluginHandler> pluginHandler(new PluginHandler());
-      _pluginHandler = std::move(pluginHandler);
-    }
+CommandInterpreter::CommandInterpreter(Visualizer *visualizer)
+    : _visualizer(visualizer) {
+  std::unique_ptr<PluginHandler> pluginHandler(new PluginHandler());
+  _pluginHandler = std::move(pluginHandler);
 
+  std::unique_ptr<DronePose> dronePose(new DronePose());
+  _dronePose = std::move(dronePose);
+}
 
-void CommandInterpreter::interprete(std::istringstream *commandFile){
-
-//TODO ----
-  DronePose *pRobPose = new DronePose();
-//TODO ====
+void CommandInterpreter::interprete(std::istringstream *commandFile) {
 
   std::istringstream &str(*commandFile);
   std::string command;
 
-  Interp4Command * plugin;
+  Interp4Command *plugin;
 
-  while(str >> command){
+  while (str >> command) {
 
     plugin = _pluginHandler->getPluginByName(command);
 
-    if(!plugin){
+    if (!plugin) {
       std::string errorComunicate = "Brak wtyczki obsługującej polecenie: [";
       errorComunicate += command;
       errorComunicate += "]";
@@ -30,10 +28,10 @@ void CommandInterpreter::interprete(std::istringstream *commandFile){
     }
 
     plugin->ReadParams(str);
-    plugin->ExecCmd( pRobPose, nullptr);
+    plugin->ExecCmd(_dronePose.get(), _visualizer);
   }
 };
 
-PluginHandler * CommandInterpreter::getPluginHandler(){
+PluginHandler *CommandInterpreter::getPluginHandler() {
   return _pluginHandler.get();
 }

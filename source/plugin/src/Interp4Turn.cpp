@@ -22,7 +22,7 @@ void Interp4Turn::PrintSyntax(std::ostream & ostr) const {
 
 const char *Interp4Turn::GetCmdName() const { return "Turn"; }
 
-bool Interp4Turn::ExecCmd(DronePose *pRobPose, Visualization *pVis) const {
+bool Interp4Turn::ExecCmd(DronePose *pRobPose, Visualizer *visualizer) const {
   Wektor3D *center = new Wektor3D();
 
   if (_radius_m > 0) { // lecimy w lewo
@@ -66,7 +66,8 @@ bool Interp4Turn::ExecCmd(DronePose *pRobPose, Visualization *pVis) const {
     newY = center->y() + _radius_m * sin((newAngle - 90) * PI_MATH_CONST / 180);
 
     pRobPose->SetPos_m_deg(newX, newY, oldZ, newAngle);
-
+    usleep(TIME_INTERVAL_MS * 1000);
+    visualizer->Draw(pRobPose);
   }
 
   delete center;

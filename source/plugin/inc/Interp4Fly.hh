@@ -9,6 +9,8 @@
 #include "Interp4Command.hh"
 #include <cmath>
 #include <sstream>
+#include <unistd.h>
+
 
 
 // TODO
@@ -68,7 +70,7 @@ public:
   /*!
      * \brief
      */
-  virtual bool ExecCmd(DronePose *pRobPose, Visualization *pVis) const;
+  virtual bool ExecCmd(DronePose *pRobPose, Visualizer *pVis) const;
   // TODO
   /*!
      * \brief

@@ -18,7 +18,7 @@ void Interp4Fly::PrintCmd() const {
 
 const char *Interp4Fly::GetCmdName() const { return "Fly"; }
 
-bool Interp4Fly::ExecCmd(DronePose *pRobPose, Visualization *pVis) const {
+bool Interp4Fly::ExecCmd(DronePose *pRobPose, Visualizer *visualizer) const {
   double dx, dy, dz, dL;
   dx = _velocityHorizontal_mPs * TIME_INTERVAL_MS / 1000.0 *
        cos(pRobPose->GetAngle_deg() * PI_MATH_CONST / 180.0);
@@ -32,8 +32,12 @@ bool Interp4Fly::ExecCmd(DronePose *pRobPose, Visualization *pVis) const {
   while (flyedDistance < _distance_m) {
     flyedDistance += dL;
     pRobPose->AddDeltaPos_m(dx, dy, dz);
+    usleep(TIME_INTERVAL_MS * 1000);
+    visualizer->Draw(pRobPose);
   }
   pRobPose->AddDeltaPos_m(dx, dy, dz);
+  usleep(TIME_INTERVAL_MS * 1000);
+  visualizer->Draw(pRobPose);
 
   return true;
 }
@@ -77,7 +81,6 @@ Interp4Command *Interp4Fly::CreateCmd() { return new Interp4Fly(); }
 /*!
  *
  */
-void Interp4Fly::PrintSyntax(std::ostream & ostr) const {
-  ostr << "   Fly  hor_velocity[m/s]  ver_velocity[m/s]  dist[m]"
-            << std::endl;
+void Interp4Fly::PrintSyntax(std::ostream &ostr) const {
+  ostr << "   Fly  hor_velocity[m/s]  ver_velocity[m/s]  dist[m]" << std::endl;
 }

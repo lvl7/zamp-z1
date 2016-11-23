@@ -6,13 +6,14 @@ Interface::Interface(std::istream &istream, std::ostream &ostream)
   std::unique_ptr<Io> io(new Io());
   _io = std::move(io);
 
+  std::unique_ptr<Visualizer> visualizer(new Visualizer());
+  _visualizer = std::move(visualizer);
+
   std::unique_ptr<CommandInterpreter> commandInterpreter(
-      new CommandInterpreter());
+      new CommandInterpreter(_visualizer.get()));
 
   _commandInterpreter = std::move(commandInterpreter);
 
-  // std::unique_ptr<CommandInterpreter> commandInterpreter(new
-  // CommandInterpreter());
   initMainMenu();
 }
 
@@ -22,7 +23,6 @@ void Interface::initMainMenu() {
   mainMenuFeatures.push_back(std::make_pair("g", "wykonaj program"));
   mainMenuFeatures.push_back(std::make_pair("p", "wyświetl dostępne komendy"));
   mainMenuFeatures.push_back(std::make_pair("q", "zakończ program"));
-
 }
 
 void Interface::printMainMenu() {
@@ -103,8 +103,8 @@ void Interface::readCommandFile() {
   _ostream << "Wczytano pomyślnie." << std::endl;
 }
 
-void Interface::showAvailableCommands(){
-  for( auto  plugin : *_commandInterpreter->getPluginHandler()->getPlugins()){
+void Interface::showAvailableCommands() {
+  for (auto plugin : *_commandInterpreter->getPluginHandler()->getPlugins()) {
     plugin.second.first->PrintSyntax(_ostream);
   }
 }
