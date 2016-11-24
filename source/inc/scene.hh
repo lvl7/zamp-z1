@@ -29,6 +29,12 @@
  */
 #define FILE_NAME__CUBOID_TEMPLATE SCENE_PATH "elementarny_szescian.dat"
 
+
+/**
+ * \brief Przechowuje przeszkody.
+ *
+ * Przechowuje przeszkody. Zawiera metody do przekształceń przeszkód jak rotacja.
+ */
 class Scene {
 private:
   /**
@@ -90,12 +96,16 @@ public:
   void AddNewCuboid(std::string name);
 
   /**
-   * \biref zwraca ostatnio dodany prosropadłościan
+   * \brief zwraca ostatnio dodany prosropadłościan
+   *
+   * \return Cuboid - ostatnio dodany prostopadłościan
    */
   Cuboid *getLastCuboid();
 
   /**
    * \brief Zwraca przeszkody w postaci mapy przeszkód z ich nazwą jako kluczem.
+   *
+   * \return mapę prostopadłościanów gdzie ich nazwa jest kluczem
    */
   std::map<std::string, Cuboid> * getCuboids();
 
