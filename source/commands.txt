@@ -3,6 +3,7 @@
  * Przykładowy zestaw poleceń
  */
 
+Scene scene.xml
 Turn 10 75 -20
 Turn 10 75 40
 Fly 2 1 30 // Start niezbyt szybki

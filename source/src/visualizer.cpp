@@ -12,6 +12,10 @@ Visualizer::Visualizer() {
   _plotter.UstawZakresY(-100, 250);
   _plotter.UstawZakresZ(-100, 200);
   _plotter.UstawRotacjeXZ(40, 60);
+
+
+   std::unique_ptr<Scene> scene(new Scene);
+   _scene = std::move(scene);
 }
 
 
@@ -117,4 +121,8 @@ void Visualizer::Draw( const DronePose *dronePose )
   AddTrajectoryPoint(dronePose);
   WriteCurrDonPose(dronePose);
   _plotter.Rysuj();
+}
+
+Scene * Visualizer::getScene(){
+  return _scene.get();
 }

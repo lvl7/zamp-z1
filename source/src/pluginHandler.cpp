@@ -16,6 +16,7 @@ void PluginHandler::loadPlugins() {
   plugins.push_back("libInterp4Fly.so");
   plugins.push_back("libInterp4Rotate.so");
   plugins.push_back("libInterp4Turn.so");
+  plugins.push_back("libInterp4Scene.so");
 
   for (auto &pluginName : plugins) {
     void *lib = dlopen(pluginName, RTLD_LAZY);
