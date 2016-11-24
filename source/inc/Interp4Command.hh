@@ -67,6 +67,7 @@ public:
   // TODO
   /**
       * \brief
+      * \throws komunikat o błędzie gdy nazwa pliku jest pusta
       */
   virtual bool ReadParams(std::istringstream &Strm_CmdsList) = 0;
 

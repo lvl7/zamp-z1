@@ -3,11 +3,16 @@
 
 #include <fstream>
 #include <iostream>
+#include <memory>
+#include <utility>
 
 #include "DronePose.hh"
 #include "lacze_do_gnuplota.hh"
 
 #include "Wektor3D.hh"
+#include "scene.hh"
+
+
 
 // TODO ---
 /*!
@@ -57,11 +62,33 @@ private:
    */
   PzG::LaczeDoGNUPlota _plotter;
 
+  /**
+   * \brief Scena na której zawarte będą przeszkody w przestrzeni
+   */
+  std::unique_ptr<Scene> _scene;
 public:
   Visualizer();
   /*!
-   * \brief
+   * \brief Rysuje drona oraz wszystkie obiekty ze sceny
+   *
+   * \param[in] dronePose - wskaźnik na drona, który ma zostać wyrysowany
    */
   virtual void Draw(const DronePose *dronePose);
+
+  /**
+   * \biref Zwraca wskaźnik na scene na której zawarte są przeszkody.
+   */
+   Scene * getScene();
+
+   /**
+    * \brief Zwraca wskaźnik na ploter.
+    */
+   PzG::LaczeDoGNUPlota *getPlotter();
+
+   /**
+    * \brief Dodaje przeszkody do wizualizacji
+    */
+   void addObstacles();
+
 };
 #endif
