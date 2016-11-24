@@ -1,17 +1,15 @@
-#include <xercesc/util/PlatformUtils.hpp>
 #include "xmlparser4scene.hh"
 #include <cassert>
 #include <cstdlib>
 #include <iostream>
 #include <sstream>
+#include <xercesc/util/PlatformUtils.hpp>
 
 #ifndef XMLSize_t
-# define XMLSize_t unsigned int
+#define XMLSize_t unsigned int
 #endif
 
-
 using namespace std;
-
 
 bool string2double(const std::string stringNumber, double &param) {
   std::istringstream istr(stringNumber);
@@ -28,32 +26,28 @@ bool string2double(const std::string stringNumber, double &param) {
  * dodatkowe pola.
  * (Ten opis należy odpowiednio uzupełnić)
  */
-XMLParser4Scene::XMLParser4Scene(Scene *Scn)
-{
+XMLParser4Scene::XMLParser4Scene(Scene *Scn, Visualizer *visualizer) {
   _pScn = Scn;
+  _visualizer = visualizer;
 }
-
 
 /*!
  * Metoda wywoływana jest bezpośrednio przed rozpoczęciem
  * przetwarzana dokumentu XML.
  */
-void XMLParser4Scene::startDocument()
-{
+void XMLParser4Scene::startDocument() {
   // cout << "*** Rozpoczecie przetwarzania dokumentu XML." << endl;
 }
-
 
 /*!
  * Metoda wywoływana jest bezpośrednio po zakończeniu
  * przetwarzana dokumentu XML.
  */
-void XMLParser4Scene::endDocument()
-{
+void XMLParser4Scene::endDocument() {
+  // _pScn->printCuboid();
+  _visualizer->addObstacles();
   // cout << "=== Koniec przetwarzania dokumentu XML." << endl;
 }
-
-
 
 /*!
  * Wykonuje operacje związane z wystąpieniem danego elementu XML.
@@ -64,18 +58,15 @@ void XMLParser4Scene::endDocument()
  * \param[in] ElemName -
  * \param[in] Attrs - (\b we,) atrybuty napotkanego elementu XML.
  */
-void XMLParser4Scene::WhenStartElement( const std::string       &ElemName,
-		                      const xercesc::Attributes   &Attrs
-                                    )
-{
-  cout << "       ---> Tu moge przetwarzyc element: " << ElemName << endl;
+void XMLParser4Scene::WhenStartElement(const std::string &ElemName,
+                                       const xercesc::Attributes &Attrs) {
+  //  cout << "       ---> Tu moge przetwarzyc element: " << ElemName << endl;
   /*
    *  Tu moge rozpoznac element i przetworzyc jego atrybuty
    */
 }
 
 void XMLParser4Scene::setScene(Scene *scene) { _pScn = scene; }
-
 
 /*!
  * Metoda jest wywoływana po napotkaniu nowego elementu XML, np.
@@ -94,34 +85,48 @@ void XMLParser4Scene::setScene(Scene *scene) { _pScn = scene; }
 /*
  * Te metode nalezy odpowiednio zdekomponowac!!!
  */
-void XMLParser4Scene::startElement(  const   XMLCh* const    pURI,
-                                       const   XMLCh* const    pLocalName,
-                                       const   XMLCh* const    pQNname,
-				       const   xercesc::Attributes&     Attrs
-                                    )
-{
+void XMLParser4Scene::startElement(const XMLCh *const pURI,
+                                   const XMLCh *const pLocalName,
+                                   const XMLCh *const pQNname,
+                                   const xercesc::Attributes &Attrs) {
+
   int cLen = Attrs.getLength();
-  for (int i = 0; i < cLen; ++i) {
+  // for (int i = 0; i < cLen; ++i) {
 
-    char *sElemName = xercesc::XMLString::transcode(Attrs.getQName(i));
-    char *sValueName = xercesc::XMLString::transcode(Attrs.getValue(static_cast<XMLSize_t>(i) ));
+  char *sElemName = xercesc::XMLString::transcode(Attrs.getQName(0));
+  char *sValueName =
+      xercesc::XMLString::transcode(Attrs.getValue(static_cast<XMLSize_t>(0)));
 
-    std::cout << "[" << sElemName << "]: \t";
 
-    if(sElemName == "Value"){
-      double value;
-      if(string2double(sValueName, value) == false){
-        value =0;
-      }
-      std::cout << value << std::endl;
+  if (strcmp(sElemName, "Name")==0) {
+    if (cLen == 1) {
+      _pScn->AddNewCuboid(sValueName);
+
     } else {
-      std::cout << sValueName << std::endl;
+
+      char *valString = xercesc::XMLString::transcode(
+          Attrs.getValue(static_cast<XMLSize_t>(1)));
+      double value;
+      if (string2double(valString, value) == false) {
+        value = 0;
+      }
+
+      if (strcmp(sValueName, "Center_x") == 0) {
+        _pScn->getLastCuboid()->getCenter()->x() = value;
+      } else if (strcmp(sValueName, "Center_y") == 0) {
+        _pScn->getLastCuboid()->getCenter()->y() = value;
+      } else if (strcmp(sValueName, "Center_z") == 0) {
+        _pScn->getLastCuboid()->getCenter()->z() = value;
+      } else if (strcmp(sValueName, "Size_x") == 0) {
+        _pScn->getLastCuboid()->getSize()->x() = value;
+      } else if (strcmp(sValueName, "Size_y") == 0) {
+        _pScn->getLastCuboid()->getSize()->y() = value;
+      } else if (strcmp(sValueName, "Size_z") == 0) {
+        _pScn->getLastCuboid()->getSize()->z() = value;
+      }
     }
   }
 }
-
-
-
 
 /*!
  * Metoda zostaje wywołana w momencie zakończenia danego elementu
@@ -140,20 +145,16 @@ void XMLParser4Scene::startElement(  const   XMLCh* const    pURI,
  *  \param[in] pLocalName -  umożliwia dostęp do nazwy elementu XML.
  *                 W podanym przykładzie nazwą elementu XML jest "Action".
  */
-void XMLParser4Scene::endElement(  const   XMLCh* const    pURI,
-                                     const   XMLCh* const    pLocalName,
-                                     const   XMLCh* const    pQName
-                                  )
-{
+void XMLParser4Scene::endElement(const XMLCh *const pURI,
+                                 const XMLCh *const pLocalName,
+                                 const XMLCh *const pQName) {
   //  char* sElemName = xercesc::XMLString::transcode(pLocalName);
   //  cout << "--- Koniec elementu: "<< sElemName << endl;
-   //
+  //
   //  WhenEndElement(sElemName);
-   //
+  //
   //  xercesc::XMLString::release(&sElemName);
 }
-
-
 
 /*!
  * Wykonuje końcowe operacje związane z danym elementem XML.
@@ -163,13 +164,11 @@ void XMLParser4Scene::endElement(  const   XMLCh* const    pURI,
  * danego elementu XML.
  * \param[in] ElemName -  nazwa elementu XML
  */
-void XMLParser4Scene::WhenEndElement(const std::string& ElemName)
-{
-  // cout << "       ---> Tu na koniec moge wykonac jakies dzialanie (o ile jest potrzebne)"
+void XMLParser4Scene::WhenEndElement(const std::string &ElemName) {
+  // cout << "       ---> Tu na koniec moge wykonac jakies dzialanie (o ile jest
+  // potrzebne)"
   //      << endl << endl;
 }
-
-
 
 /*!
  * Metoda wywoływana jest, gdy napotkany zostanie błąd fatalny,
@@ -179,20 +178,18 @@ void XMLParser4Scene::WhenEndElement(const std::string& ElemName)
     </Parametr>
   \endverbatim
  */
-void XMLParser4Scene::fatalError(const xercesc::SAXParseException&  Exception)
-{
-   char* sMessage = xercesc::XMLString::transcode(Exception.getMessage());
-   char* sSystemId = xercesc::XMLString::transcode(Exception.getSystemId());
+void XMLParser4Scene::fatalError(const xercesc::SAXParseException &Exception) {
+  char *sMessage = xercesc::XMLString::transcode(Exception.getMessage());
+  char *sSystemId = xercesc::XMLString::transcode(Exception.getSystemId());
 
-   cerr << "Blad fatalny! " << endl
-        << "    Plik:  " << sSystemId << endl
-        << "   Linia: " << Exception.getLineNumber() << endl
-        << " Kolumna: " << Exception.getColumnNumber() << endl
-        << " Informacja: " << sMessage
-        << endl;
+  cerr << "Blad fatalny! " << endl
+       << "    Plik:  " << sSystemId << endl
+       << "   Linia: " << Exception.getLineNumber() << endl
+       << " Kolumna: " << Exception.getColumnNumber() << endl
+       << " Informacja: " << sMessage << endl;
 
-   xercesc::XMLString::release(&sMessage);
-   xercesc::XMLString::release(&sSystemId);
+  xercesc::XMLString::release(&sMessage);
+  xercesc::XMLString::release(&sSystemId);
 }
 
 /*!
@@ -203,36 +200,31 @@ void XMLParser4Scene::fatalError(const xercesc::SAXParseException&  Exception)
  *                     te to opis błędu oraz numer linii, w której
  *                     wystąpił błąd.
  */
-void XMLParser4Scene::error(const xercesc::SAXParseException&  Exception)
-{
+void XMLParser4Scene::error(const xercesc::SAXParseException &Exception) {
   cerr << "Blad ..." << endl;
 
+  char *sMessage = xercesc::XMLString::transcode(Exception.getMessage());
+  char *sSystemId = xercesc::XMLString::transcode(Exception.getSystemId());
 
-   char* sMessage = xercesc::XMLString::transcode(Exception.getMessage());
-   char* sSystemId = xercesc::XMLString::transcode(Exception.getSystemId());
+  cerr << "Blad fatalny! " << endl
+       << "    Plik:  " << sSystemId << endl
+       << "   Linia: " << Exception.getLineNumber() << endl
+       << " Kolumna: " << Exception.getColumnNumber() << endl
+       << " Informacja: " << sMessage << endl;
 
-   cerr << "Blad fatalny! " << endl
-        << "    Plik:  " << sSystemId << endl
-        << "   Linia: " << Exception.getLineNumber() << endl
-        << " Kolumna: " << Exception.getColumnNumber() << endl
-        << " Informacja: " << sMessage
-        << endl;
-
-   xercesc::XMLString::release(&sMessage);
-   xercesc::XMLString::release(&sSystemId);
-   //TMP
+  xercesc::XMLString::release(&sMessage);
+  xercesc::XMLString::release(&sSystemId);
+  // TMP
   /*
    * Tutaj należy wstawić odpowiedni kod. Tekst wyświetlany powyżej
    * jest tylko "atrapą".
    */
 }
 
-
 /*!
  *
  */
-void XMLParser4Scene::warning(const xercesc::SAXParseException&  Exception)
-{
+void XMLParser4Scene::warning(const xercesc::SAXParseException &Exception) {
   cerr << "Ostrzezenie ..." << endl;
 
   /*

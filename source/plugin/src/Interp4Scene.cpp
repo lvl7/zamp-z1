@@ -45,7 +45,7 @@ bool Interp4Scene::ExecCmd(DronePose *pRobPose, Visualizer *pVis) const {
 
    pParser->setFeature(XMLUni::fgXercesValidationErrorAsFatal, true);
 
-   DefaultHandler* pHandler = new XMLParser4Scene(pVis->getScene());
+   DefaultHandler* pHandler = new XMLParser4Scene(pVis->getScene(), pVis);
    pParser->setContentHandler(pHandler);
    pParser->setErrorHandler(pHandler);
 

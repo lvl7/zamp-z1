@@ -9,8 +9,10 @@
 #include <xercesc/sax2/DefaultHandler.hpp>
 
 // XERCES_CPP_NAMESPACE_USE
-#include "scene.hh"
 #include <string>
+
+#include "scene.hh"
+#include "visualizer.hh"
 
 /*!
  * \brief Implementuje reakcje na napotkane elementu opisu akcji
@@ -23,7 +25,7 @@ public:
   /*!
    * \brief Inicjalizuje obiekt i kojarzy go ze sceną
    */
-  XMLParser4Scene(Scene *Scn);
+  XMLParser4Scene(Scene *Scn, Visualizer *visualizer);
 
   /*!
    * \brief Wywoływana jest na początku dokumentu
@@ -83,11 +85,13 @@ public:
 private:
   /*!
    *  \brief Zawiera wskaźnik do modyfikowanej sceny
-   *
-   *  Zawiera wskaźnik na obiekt, do którego mają zostać wpisane
-   *  informacje z wczytywanego pliku.
    */
   Scene *_pScn;
+
+  /**
+   * \brief Wskaźnik na obiekt odpowiedzialny za wizualizację
+   */
+  Visualizer *_visualizer;
 };
 
 #endif

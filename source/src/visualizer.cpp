@@ -8,17 +8,14 @@ Visualizer::Visualizer() {
   _plotter.DodajNazwePliku(FILE_NAME__DRON_BODY_VIEW);
 
   _plotter.ZmienTrybRys(PzG::TR_3D);
-  _plotter.UstawZakresX(-100, 250);
-  _plotter.UstawZakresY(-100, 250);
+  _plotter.UstawZakresX(-100, 100);
+  _plotter.UstawZakresY(-100, 100);
   _plotter.UstawZakresZ(-100, 200);
-  _plotter.UstawRotacjeXZ(40, 60);
+  // _plotter.UstawRotacjeXZ(40, 60);
 
-
-   std::unique_ptr<Scene> scene(new Scene);
-   _scene = std::move(scene);
+  std::unique_ptr<Scene> scene(new Scene);
+  _scene = std::move(scene);
 }
-
-
 
 /*!
  * Dodaje do pliku, którego nazwa jest zdefinowana
@@ -27,59 +24,64 @@ Visualizer::Visualizer() {
  *                                     FILE_NAME__DRON_BODY_VIEW\endlik,
  * współrzędne następnego punktu ścieżki ruchu drona.
  */
-bool AddTrajectoryPoint( const DronePose *dronePose )
-{
-  std::ofstream  OuStrm(FILE_NAME__TRAJECTORY, std::ios::app);
+bool AddTrajectoryPoint(const DronePose *dronePose) {
+  std::ofstream OuStrm(FILE_NAME__TRAJECTORY, std::ios::app);
   if (!OuStrm.is_open()) {
     std::cerr << " Blad otwarcia do zapisu pliku \"" FILE_NAME__TRAJECTORY "\""
-	 << std::endl;
+              << std::endl;
     return false;
   }
   OuStrm << dronePose->GetPos_m() << std::endl;
   return true;
 }
 
-
 /*!
  * Zapisanie pliku z zaktualnymi współrzędnymi wierzchołków bryły
  * opisującej drona.
  * Ze względu na specyfikę sposobu rysowania powierzchni przez program gnuplot,
  * format wejściowy i wyjściowy pliku musi zostać zachowany, tzn. muszą być
- * zachwane przerwy w postaci wolnych linii między kolejnymi zbiorami wierzchołków,
+ * zachwane przerwy w postaci wolnych linii między kolejnymi zbiorami
+ * wierzchołków,
  * które stanowią tworzącą rysowanej siatki danej powierzchni.
  * Ta funkcja to zapewnia.
- * \param[in] dronePose - wskaźnik na obiekt zawierający dane dotyczące aktualnej pozy
+ * \param[in] dronePose - wskaźnik na obiekt zawierający dane dotyczące
+ * aktualnej pozy
  *                    drona.
  *
- * \warning W tej funkcji brakuje uwzględnienia rotacji, która pozwoli odzwierciedlić
+ * \warning W tej funkcji brakuje uwzględnienia rotacji, która pozwoli
+ * odzwierciedlić
  *          aktualną orientację drona. W kodzie funkcji jest zaznaczone miejsce,
  *          w którym należy wpisać odpowiedni kod.
  *
  */
-bool WriteCurrDonPose( const DronePose *dronePose )
-{
-  std::ofstream  OuStrm(FILE_NAME__DRON_BODY_VIEW);
-  std::ifstream  InStrm(FILE_NAME__DRON_BODY_TEMPLATE);
+bool WriteCurrDonPose(const DronePose *dronePose) {
+  std::ofstream OuStrm(FILE_NAME__DRON_BODY_VIEW);
+  std::ifstream InStrm(FILE_NAME__DRON_BODY_TEMPLATE);
   Wektor3D Pos;
 
   if (!OuStrm.is_open()) {
-  std::cerr << " Blad otwarcia do zapisu pliku \"" FILE_NAME__DRON_BODY_VIEW "\""
-	 << std::endl;
+    std::cerr << " Blad otwarcia do zapisu pliku \"" FILE_NAME__DRON_BODY_VIEW
+                 "\""
+              << std::endl;
     return false;
   }
   if (!InStrm.is_open()) {
-  std::cerr << " Blad otwarcia do odczytu pliku \"" FILE_NAME__DRON_BODY_TEMPLATE "\""
-	 << std::endl;
+    std::cerr
+        << " Blad otwarcia do odczytu pliku \"" FILE_NAME__DRON_BODY_TEMPLATE
+           "\""
+        << std::endl;
     return false;
   }
 
-  char      Separator;
+  char Separator;
 
   while (!InStrm.eof()) {
     if (InStrm >> Pos) {
       //
-      // Przed translacją trzeba dokonać właściwej rotacji, aby uwzględnić aktualną
-      // orientację drona. Dla ułatwienia przyjmujemy, że uwzględniamy tylko orientację
+      // Przed translacją trzeba dokonać właściwej rotacji, aby uwzględnić
+      // aktualną
+      // orientację drona. Dla ułatwienia przyjmujemy, że uwzględniamy tylko
+      // orientację
       // w płaszczyźnie 0XY.
       //
       // Tutaj więc należy dopisać kod rotacji
@@ -89,19 +91,19 @@ bool WriteCurrDonPose( const DronePose *dronePose )
       continue;
     }
     InStrm.clear();
-    if (!(InStrm >> Separator)) break;
+    if (!(InStrm >> Separator))
+      break;
     if (Separator != '#') {
-    std::cerr << " Blad w pliku \"" FILE_NAME__DRON_BODY_TEMPLATE "\"" << std::endl
-           << " oczekiwano znaku #. Zamiast tego odebrano znak " << Separator
-	   << std::endl;
+      std::cerr << " Blad w pliku \"" FILE_NAME__DRON_BODY_TEMPLATE "\""
+                << std::endl
+                << " oczekiwano znaku #. Zamiast tego odebrano znak "
+                << Separator << std::endl;
       return false;
     }
     OuStrm << "#\n\n";
   }
   return true;
 }
-
-
 
 /*!
  * Powoduje dopisanie aktualnej współrzędnej drona do pliku,
@@ -113,16 +115,38 @@ bool WriteCurrDonPose( const DronePose *dronePose )
  * nowej pozycji. Po tej pozycji następuje odrysowanie drona
  * w jego aktulanej pozycji.
  *
- * \param[in] dronePose - wskaźnik na obiekt zawierający dane dotyczące aktualnej pozy
+ * \param[in] dronePose - wskaźnik na obiekt zawierający dane dotyczące
+ * aktualnej pozy
  *                    drona.
  */
-void Visualizer::Draw( const DronePose *dronePose )
-{
+void Visualizer::Draw(const DronePose *dronePose) {
   AddTrajectoryPoint(dronePose);
   WriteCurrDonPose(dronePose);
   _plotter.Rysuj();
 }
 
-Scene * Visualizer::getScene(){
-  return _scene.get();
+Scene *Visualizer::getScene() { return _scene.get(); }
+
+PzG::LaczeDoGNUPlota *Visualizer::getPlotter() { return &_plotter; }
+
+void Visualizer::addObstacles(){
+  for (auto cub : *_scene->getCuboids()) {
+    std::string pathOut = SCENE_PATH;
+    pathOut += cub.first;
+    pathOut += ".dat";
+
+    _scene->TransformGeom(FILE_NAME__CUBOID_TEMPLATE, pathOut.c_str(),
+                  *cub.second.getCenter(), 0,
+                  *cub.second.getSize() );
+
+        //           std::cout
+        // << cub.first << cub.second.getCenter()->x() << " "
+        // << cub.second.getCenter()->y() << " " << cub.second.getCenter()->z()
+        // << " " << cub.second.getSize()->x() << " "
+        // << cub.second.getSize()->y() << " " << cub.second.getSize()->z()
+        // << std::endl;
+
+        _plotter.DodajNazwePliku(pathOut.c_str(),PzG::RR_Ciagly,1,12);
+  }
+
 }

@@ -80,5 +80,15 @@ public:
    */
    Scene * getScene();
 
+   /**
+    * \brief Zwraca wskaźnik na ploter.
+    */
+   PzG::LaczeDoGNUPlota *getPlotter();
+
+   /**
+    * \brief Dodaje przeszkody do wizualizacji
+    */
+   void addObstacles();
+
 };
 #endif
